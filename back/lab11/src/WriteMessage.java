@@ -3,18 +3,23 @@ import java.net.DatagramPacket;
 import java.net.DatagramSocket;
 import java.net.InetAddress;
 import java.util.Scanner;
+import java.io.*;
 
 public class WriteMessage extends Thread {
     private static String userName;
     private InetAddress address;
     private int port;
     private DatagramSocket socket;
+    private StringBuilder chatHistory;
+
+
 
     public WriteMessage(InetAddress address, int port, DatagramSocket socket) {
         this.setAddress(address);
         this.setPort(port);
         this.setSocket(socket);
         this.setUserName("Unknown");
+        chatHistory = new StringBuilder();
     }
 
     @Override
@@ -22,8 +27,13 @@ public class WriteMessage extends Thread {
         Scanner scanner = new Scanner(System.in);
         while (true) {
             String message = scanner.nextLine();
-            if (message.charAt(0) == '@')
-                commandMenu(message);
+            if (message.charAt(0) == '@') {
+                try {
+                    commandMenu(message);
+                } catch (IOException e) {
+                    throw new RuntimeException(e);
+                }
+            }
             else
                 sendMessage(message);
         }
@@ -34,13 +44,28 @@ public class WriteMessage extends Thread {
         byte[] buffer;
         buffer = message.getBytes();
         DatagramPacket outputPacket = new DatagramPacket(buffer, message.length(), address, port);
+        chatHistory.append(message).append("\n");
         try {
             socket.send(outputPacket);
         } catch (IOException e) {
             throw new RuntimeException(e);
         }
     }
-    public void commandMenu(String message) {
+    public void saveInFile() {
+        try {
+            File file = new File("dumpFile.txt");
+            file.createNewFile();
+            FileWriter fileWriter = new FileWriter(file, false);
+
+            try (BufferedWriter writer = new BufferedWriter(fileWriter)) {
+                writer.write(chatHistory.toString());
+            }
+
+        } catch (IOException e) {
+            System.err.println(e.getMessage());
+        }
+    }
+    public void commandMenu(String message) throws IOException {
         String[] options;
         options = message.split(" ");
         while (true) {
@@ -51,10 +76,17 @@ public class WriteMessage extends Thread {
                 break;
             }
             else if (options[0].equals("@quit")) {
+                System.out.println("Bye!");
                 System.exit(1);
+            }
+            else if (options[0].equals("@dumpfile")) {
+                saveInFile();
+                System.out.println("Your dump file was save");
+                break;
             }
             else {
                 sendMessage(message);
+                chatHistory.append(message).append("\n");
                 break;
             }
         }

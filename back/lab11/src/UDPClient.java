@@ -1,4 +1,5 @@
 import java.io.BufferedReader;
+import java.io.IOException;
 import java.io.InputStreamReader;
 import java.net.*;
 import java.util.Scanner;
@@ -24,5 +25,14 @@ public class UDPClient {
         System.out.println("Enter port: ");
         port = scanner.nextInt();
         clientSocket = new DatagramSocket();
+        byte[] buffer = new byte[1024];
+        String firstPacket = "Connected";
+        buffer = firstPacket.getBytes();
+        DatagramPacket outputPacket = new DatagramPacket(buffer, firstPacket.length(), inetAddress, port);
+        try {
+            clientSocket.send(outputPacket);
+        } catch (IOException e) {
+            throw new RuntimeException(e);
+        }
     }
 }

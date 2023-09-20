@@ -20,8 +20,9 @@ public class ReadMessage extends Thread {
         System.out.println("What do you want to do?");
         System.out.println("""
                 1. Set username - @name;
-                2. Send message - just write a message;
-                3. Exit - @quit""");
+                2. Save chat history - @dumpfile;
+                3. Send message - just write a message;
+                4. Exit - @quit""");
         while (isConnected) {
             try {
                 byte[] buffer = new byte[1024];

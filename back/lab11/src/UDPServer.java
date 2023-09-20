@@ -38,7 +38,6 @@ public class UDPServer {
         clientPort = inputPacket.getPort();
         clientAddress = inputPacket.getAddress();
         DatagramPacket outputPacket = new DatagramPacket(buffer, buffer.length, getClientAddress(), getClientPort());
-        getServerSocket().send(outputPacket);
         System.out.println("New client: \n" + "Address: " + getClientAddress() + "\nPort" + getClientPort());
         isConnected = true;
     }
