@@ -1,18 +1,23 @@
+import java.io.BufferedWriter;
+import java.io.File;
+import java.io.FileWriter;
 import java.io.IOException;
 import java.net.DatagramPacket;
 import java.net.DatagramSocket;
 import java.net.InetAddress;
 
 public class ReadMessage extends Thread {
-    boolean isConnected;
-    int port;
-    InetAddress address;
-    DatagramSocket socket;
-    public ReadMessage(int port, InetAddress address, DatagramSocket socket) {
+    private boolean isConnected;
+    private int port;
+    private InetAddress address;
+    private DatagramSocket socket;
+    private static StringBuilder chatHistory;
+    public ReadMessage(int port, InetAddress address, DatagramSocket socket, StringBuilder chatHistory) {
         this.port = port;
         this.address = address;
         this.socket = socket;
         this.isConnected = true;
+        this.chatHistory = chatHistory;
     }
 
     @Override
@@ -29,10 +34,31 @@ public class ReadMessage extends Thread {
                 DatagramPacket inputPacket = new DatagramPacket(buffer, buffer.length);
                 socket.receive(inputPacket);
                 String message = new String(inputPacket.getData(), 0, inputPacket.getLength());
-                System.out.println(message);
+                if (message.equals("@dumpfile")) {
+                    saveInFile();
+                }
+                else {
+                    chatHistory.append(message).append("\n");
+                    System.out.println(message);
+                }
             } catch (IOException e) {
                 throw new RuntimeException(e);
             }
         }
     }
+    public void saveInFile() {
+        try {
+            File file = new File("dumpFile.txt");
+            file.createNewFile();
+            FileWriter fileWriter = new FileWriter(file, false);
+
+            try (BufferedWriter writer = new BufferedWriter(fileWriter)) {
+                writer.write(chatHistory.toString());
+            }
+
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+    }
+
 }

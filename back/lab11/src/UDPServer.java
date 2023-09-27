@@ -10,13 +10,14 @@ public class UDPServer {
     private static InetAddress clientAddress;
     private static boolean isConnected;
     private static int clientPort;
+    private static StringBuilder chatHistory;
 
 
     public static void main(String args[]) throws Exception {
         startServer();
 
-        ReadMessage readMessage = new ReadMessage(clientPort, clientAddress, serverSocket);
-        WriteMessage writeMessage = new WriteMessage(clientAddress, clientPort, serverSocket);
+        ReadMessage readMessage = new ReadMessage(clientPort, clientAddress, serverSocket, chatHistory);
+        WriteMessage writeMessage = new WriteMessage(clientAddress, clientPort, serverSocket, chatHistory);
         readMessage.start();
         writeMessage.start();
         writeMessage.join();
@@ -24,6 +25,7 @@ public class UDPServer {
     }
     private static void startServer() throws IOException {
         Scanner scanner = new Scanner(System.in);
+        chatHistory = new StringBuilder();
         System.out.println("Enter port for listening: ");
         int port = scanner.nextInt();
         System.out.println("The port is: " + port);

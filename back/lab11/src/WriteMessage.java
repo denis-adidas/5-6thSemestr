@@ -14,12 +14,12 @@ public class WriteMessage extends Thread {
 
 
 
-    public WriteMessage(InetAddress address, int port, DatagramSocket socket) {
+    public WriteMessage(InetAddress address, int port, DatagramSocket socket, StringBuilder chatHistory) {
         this.setAddress(address);
         this.setPort(port);
         this.setSocket(socket);
         this.setUserName("Unknown");
-        chatHistory = new StringBuilder();
+        this.chatHistory = chatHistory;
     }
 
     @Override
@@ -41,10 +41,13 @@ public class WriteMessage extends Thread {
 
     public void sendMessage(String message) {
         message = getUserName() + ": " + message;
+        sendCommand(message);
+        chatHistory.append(message).append("\n");
+    }
+    public void sendCommand(String message) {
         byte[] buffer;
         buffer = message.getBytes();
         DatagramPacket outputPacket = new DatagramPacket(buffer, message.length(), address, port);
-        chatHistory.append(message).append("\n");
         try {
             socket.send(outputPacket);
         } catch (IOException e) {
@@ -54,7 +57,8 @@ public class WriteMessage extends Thread {
     public void saveInFile() {
         try {
             File file = new File("dumpFile.txt");
-            file.createNewFile();
+            if (!file.exists())
+                file.createNewFile();
             FileWriter fileWriter = new FileWriter(file, false);
 
             try (BufferedWriter writer = new BufferedWriter(fileWriter)) {
@@ -62,7 +66,7 @@ public class WriteMessage extends Thread {
             }
 
         } catch (IOException e) {
-            System.err.println(e.getMessage());
+            e.printStackTrace();
         }
     }
     public void commandMenu(String message) throws IOException {
@@ -80,8 +84,7 @@ public class WriteMessage extends Thread {
                 System.exit(1);
             }
             else if (options[0].equals("@dumpfile")) {
-                saveInFile();
-                System.out.println("Your dump file was save");
+                sendCommand(options[0]);
                 break;
             }
             else {
