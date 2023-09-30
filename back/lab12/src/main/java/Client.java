@@ -28,6 +28,7 @@ public class Client {
             while (socket.isConnected()) {
                 String messageToSend = scanner.nextLine();
                 bufferedWriter.write(username + ": " + messageToSend);
+                bufferedWriter.newLine();
                 bufferedWriter.flush();
             }
         } catch (IOException e) {

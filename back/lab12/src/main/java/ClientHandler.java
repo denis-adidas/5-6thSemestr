@@ -50,9 +50,19 @@ public class ClientHandler implements Runnable {
             }
         }
     }
+    public String checkToSendToUser(String message) {
+        String[] options;
+        options = message.split(" ");
+        if (options[0].equals("@name")) {
+            return options[1];
+        }
+        else {
+            return "";
+        }
+    }
     public void removeClienthandler(){
         clientHandlers.remove(this);
-        broadcastMessage("SERVER: " + clientUsername + " has left rhe chat");
+        broadcastMessage("SERVER: " + clientUsername + " has left the chat");
     }
     public void closeEverything(Socket socket, BufferedReader bufferedReader, BufferedWriter bufferedWriter) {
         removeClienthandler();
