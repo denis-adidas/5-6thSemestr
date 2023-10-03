@@ -5,7 +5,7 @@ import javax.servlet.http.*;
 import java.io.*;
 
 public class NotebookServlet extends HttpServlet {
-    Notebook notebook = new Notebook();
+    NotebookModel notebook = new NotebookModel();
 
     public void init(ServletConfig config) {
         notebook.addPerson("Masha");
