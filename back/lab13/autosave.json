@@ -9,7 +9,9 @@
       "name": "Kolya"
     },
     {
-      "numbers": [],
+      "numbers": [
+        "123"
+      ],
       "name": "Alice"
     }
   ]

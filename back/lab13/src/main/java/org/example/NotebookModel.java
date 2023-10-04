@@ -38,8 +38,13 @@ public class NotebookModel {
         public String getName() {
             return name;
         }
-
-
+        @Override
+        public String toString() {
+            StringBuilder str = new StringBuilder();
+            str.append("Name: ").append(name).append("; ");
+            str.append("Numbers: ").append(numbers.toString());
+            return str.toString();
+        }
     }
     private ArrayList<Person> persons = new ArrayList<Person>();
     public NotebookModel() {
@@ -54,20 +59,14 @@ public class NotebookModel {
     public synchronized void addPerson(String name) {
         getPersons().add(new Person(name));
     }
-    @Description("it's not work")
+
     public synchronized void addPersonNumber(String name, String number) {
-        System.out.println(getPersons());
-        if (getPersons().contains(name))
-            getPersons().get(getPersons().indexOf(name)).addNumber(number);
+        for (Person x : getPersons())
+            if (x.getName().equals(name))
+                x.addNumber(number);
     }
     public synchronized void removePersonNumber(String name, String number) {
         getPersons().get(getPersons().indexOf(name)).removeNumber(number);
-    }
-
-    public synchronized String[] getNamesStrings() {
-        String[] array = new String [getPersons().size()];
-        array = getPersons().toArray(array);
-        return array;
     }
 
     public synchronized void reset() {

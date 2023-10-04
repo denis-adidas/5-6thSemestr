@@ -17,6 +17,14 @@ public class NotebookModelTest {
     }
 
     @Test
+    public void PersonToString() {
+        notebook.addPerson("Denis");
+        notebook.addPersonNumber("Denis", "+79876436110");
+        notebook.addPersonNumber("Denis", "+79173305836");
+        assertEquals("Name: Denis; Numbers: [+79876436110, +79173305836]", notebook.getPersons().get(2).toString());
+    }
+
+    @Test
     public void testAddPerson() {
         notebook.addPerson("Alice");
         assertEquals(3, notebook.getPersons().size());
@@ -30,7 +38,6 @@ public class NotebookModelTest {
         assertTrue(numbers.contains("123"));
     }
 
-    // Add more tests for other methods...
 
     @Test
     public void testSerializationDeserialization() {
@@ -46,8 +53,8 @@ public class NotebookModelTest {
         NotebookModel deserializedNotebook = NotebookModel.loadFromJsonFile("autosave.json");
 
         // Check if the deserialized object is equal to the original
-        assertEquals(originalNotebook.getNamesStrings().length, deserializedNotebook.getNamesStrings().length);
-        assertEquals(originalNotebook.getNamesStrings()[0], deserializedNotebook.getNamesStrings()[0]);
+        assertEquals(originalNotebook.getPersons().size(), deserializedNotebook.getPersons().size());
+        assertEquals(originalNotebook.getPersons().get(0).getName(), deserializedNotebook.getPersons().get(0).getName());
         assertEquals(originalNotebook.getPersons().get(0).getNumbers(), deserializedNotebook.getPersons().get(0).getNumbers());
     }
 
