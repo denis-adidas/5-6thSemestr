@@ -1,0 +1,18 @@
+{
+  "persons": [
+    {
+      "numbers": [],
+      "name": "Vasya"
+    },
+    {
+      "numbers": [],
+      "name": "Kolya"
+    },
+    {
+      "numbers": [
+        "123"
+      ],
+      "name": "Alice"
+    }
+  ]
+}
