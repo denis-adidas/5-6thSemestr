@@ -1,8 +1,14 @@
+import com.google.gson.Gson;
+import com.google.gson.JsonSyntaxException;
+import com.google.gson.reflect.TypeToken;
+
 import java.io.*;
 import java.lang.ref.Cleaner;
 import java.net.Socket;
+import java.nio.charset.StandardCharsets;
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.List;
 
 public class ClientHandler implements Runnable {
     public static ArrayList<ClientHandler> clientHandlers = new ArrayList<>();
@@ -10,15 +16,42 @@ public class ClientHandler implements Runnable {
     private BufferedReader bufferedReader;
     private BufferedWriter bufferedWriter;
     private String clientUsername;
+    private String clientPassword;
 
     public ClientHandler(Socket socket) {
         try {
             this.socket = socket;
             this.bufferedWriter = new BufferedWriter(new OutputStreamWriter(socket.getOutputStream()));
             this.bufferedReader = new BufferedReader(new InputStreamReader(socket.getInputStream()));
+
+
             this.clientUsername = bufferedReader.readLine();
-            clientHandlers.add(this);
-            broadcastMessageToAll("SERVER: " + clientUsername + " has entered the chat!");
+            this.clientPassword = bufferedReader.readLine();
+
+            List<User> users = loadUsersFromJson("users.json");
+            if (users != null) {
+                boolean isValidUser = false;
+                for (User user : users) {
+                    if (user.getUsername().equals(clientUsername) && user.getPassword().equals(clientPassword)) {
+                        clientHandlers.add(this);
+                        broadcastMessageToAll("SERVER: " + clientUsername + " has entered the chat!");
+                        break;
+                    }
+                }
+
+                if (!isValidUser) {
+                    broadcastMessageToAll("Invalid username or password. Closing connection.");
+                    closeEverything(socket, bufferedReader, bufferedWriter);
+                    return;
+                }
+            } else {
+                broadcastMessageToAll("Failed to load user data. Closing connection.");
+                closeEverything(socket, bufferedReader, bufferedWriter);
+                return;
+            }
+
+
+
         } catch (IOException e) {
             closeEverything(socket, bufferedReader, bufferedWriter);
         }
@@ -93,6 +126,16 @@ public class ClientHandler implements Runnable {
             }
         } catch (IOException e) {
             e.printStackTrace();
+        }
+    }
+    private static List<User> loadUsersFromJson(String filePath) {
+        try (Reader reader = new BufferedReader(new InputStreamReader(
+                new FileInputStream(filePath), StandardCharsets.UTF_8))) {
+            Gson gson = new Gson();
+            return gson.fromJson(reader, new TypeToken<List<User>>() {}.getType());
+        } catch (IOException | JsonSyntaxException e) {
+            e.printStackTrace();
+            return null;
         }
     }
 }

@@ -1,3 +1,5 @@
+import jdk.jfr.Description;
+
 import java.io.*;
 import java.net.Socket;
 import java.util.Scanner;
@@ -68,13 +70,15 @@ public class Client {
             e.printStackTrace();
         }
     }
-
+    @Description("add password")
     public static void main(String[] args) throws IOException {
         Scanner scanner = new Scanner(System.in);
-        System.out.println("Enter your username for the chat: ");
-        String username = scanner.nextLine();
+        System.out.println("Enter your username login: ");
+        String login = scanner.nextLine();
+        System.out.println("Enter your login password: ");
+        String password = scanner.nextLine();
         Socket socket = new Socket("localhost", 1234);
-        Client client = new Client(socket, username);
+        Client client = new Client(socket, login);
         client.listenForMessage();
         client.sendMessage();
     }
