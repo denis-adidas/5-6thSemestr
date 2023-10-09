@@ -6,9 +6,7 @@ import java.io.*;
 import java.lang.ref.Cleaner;
 import java.net.Socket;
 import java.nio.charset.StandardCharsets;
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.List;
+import java.util.*;
 
 public class ClientHandler implements Runnable {
     public static ArrayList<ClientHandler> clientHandlers = new ArrayList<>();
@@ -17,41 +15,25 @@ public class ClientHandler implements Runnable {
     private BufferedWriter bufferedWriter;
     private String clientUsername;
     private String clientPassword;
+    private final Map<String, String> userCredentials = loadUserCredentialsFromFile();
 
     public ClientHandler(Socket socket) {
         try {
             this.socket = socket;
             this.bufferedWriter = new BufferedWriter(new OutputStreamWriter(socket.getOutputStream()));
             this.bufferedReader = new BufferedReader(new InputStreamReader(socket.getInputStream()));
-
-
             this.clientUsername = bufferedReader.readLine();
             this.clientPassword = bufferedReader.readLine();
+            broadcastMessageToAll("TEST: " + validateCredentials(clientUsername,clientPassword) + "!");
+            clientHandlers.add(this);
 
-            List<User> users = loadUsersFromJson("users.json");
-            if (users != null) {
-                boolean isValidUser = false;
-                for (User user : users) {
-                    if (user.getUsername().equals(clientUsername) && user.getPassword().equals(clientPassword)) {
-                        clientHandlers.add(this);
-                        broadcastMessageToAll("SERVER: " + clientUsername + " has entered the chat!");
-                        break;
-                    }
-                }
-
-                if (!isValidUser) {
-                    broadcastMessageToAll("Invalid username or password. Closing connection.");
-                    closeEverything(socket, bufferedReader, bufferedWriter);
-                    return;
-                }
-            } else {
-                broadcastMessageToAll("Failed to load user data. Closing connection.");
-                closeEverything(socket, bufferedReader, bufferedWriter);
-                return;
-            }
-
-
-
+//            if (validateCredentials(clientUsername, clientPassword)) {
+//                clientHandlers.add(this);
+//                broadcastMessageToAll("SERVER: " + clientUsername + " has entered the chat!");
+//            } else {
+//                broadcastMessageToAll("Login or password not valid");
+//                closeEverything(socket, bufferedReader, bufferedWriter);
+//            }
         } catch (IOException e) {
             closeEverything(socket, bufferedReader, bufferedWriter);
         }
@@ -128,14 +110,28 @@ public class ClientHandler implements Runnable {
             e.printStackTrace();
         }
     }
-    private static List<User> loadUsersFromJson(String filePath) {
-        try (Reader reader = new BufferedReader(new InputStreamReader(
-                new FileInputStream(filePath), StandardCharsets.UTF_8))) {
-            Gson gson = new Gson();
-            return gson.fromJson(reader, new TypeToken<List<User>>() {}.getType());
-        } catch (IOException | JsonSyntaxException e) {
+//    private boolean validateCredentials(String username, String password) {
+//        String storedPassword = userCredentials.get(username);
+//        return storedPassword != null && storedPassword.equals(password);
+//    }
+private boolean validateCredentials(String username, String password) {
+    String storedPassword = userCredentials.get(username);
+    return storedPassword != null && storedPassword.equals(password);
+//    return true;
+}
+    private Map<String, String> loadUserCredentialsFromFile() {
+        Map<String, String> credentials = new HashMap<>();
+        try (BufferedReader reader = new BufferedReader(new FileReader("users.txt"))) {
+            String line;
+            while ((line = reader.readLine()) != null) {
+                String[] parts = line.split(":");
+                if (parts.length == 2) {
+                    credentials.put(parts[0], parts[1]);
+                }
+            }
+        } catch (IOException e) {
             e.printStackTrace();
-            return null;
         }
+        return credentials;
     }
 }
