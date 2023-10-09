@@ -24,7 +24,7 @@ public class ClientHandler implements Runnable {
             this.bufferedReader = new BufferedReader(new InputStreamReader(socket.getInputStream()));
             this.clientUsername = bufferedReader.readLine();
             this.clientPassword = bufferedReader.readLine();
-            broadcastMessageToAll("TEST: " + validateCredentials(clientUsername,clientPassword) + "!");
+            broadcastMessageToAll("TEST: " + userCredentials.get(clientUsername) + "!");
             clientHandlers.add(this);
 
 //            if (validateCredentials(clientUsername, clientPassword)) {
@@ -110,14 +110,10 @@ public class ClientHandler implements Runnable {
             e.printStackTrace();
         }
     }
-//    private boolean validateCredentials(String username, String password) {
-//        String storedPassword = userCredentials.get(username);
-//        return storedPassword != null && storedPassword.equals(password);
-//    }
+
 private boolean validateCredentials(String username, String password) {
     String storedPassword = userCredentials.get(username);
-    return storedPassword != null && storedPassword.equals(password);
-//    return true;
+    return storedPassword.equals(password);
 }
     private Map<String, String> loadUserCredentialsFromFile() {
         Map<String, String> credentials = new HashMap<>();
