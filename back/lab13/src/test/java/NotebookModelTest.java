@@ -34,6 +34,13 @@ public class NotebookModelTest {
         List<String> numbers = notebook.getPersons().get(0).getNumbers();
         assertTrue(numbers.contains("123"));
     }
+    @Test
+    public void testOnePersonNumbers() {
+        notebook.addPersonNumber("Denis", "123");
+        notebook.addPersonNumber("Alice", "123");
+        notebook.addPersonNumber("Denis", "456");
+        assertEquals("Denis: [123, 456]", notebook.OnePersonNumbers("Denis"));
+    }
 
 
     @Test

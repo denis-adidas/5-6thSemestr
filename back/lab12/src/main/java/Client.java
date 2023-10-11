@@ -72,13 +72,12 @@ public class Client {
             e.printStackTrace();
         }
     }
-    @Description("add password")
+
     public static void main(String[] args) throws IOException {
         Scanner scanner = new Scanner(System.in);
         System.out.println("Enter your username login: ");
         String login = scanner.nextLine();
         System.out.println("Enter your login password: ");
-//        String password = scanner.nextLine();
         Socket socket = new Socket("localhost", 1234);
         Client client = new Client(socket, login, "123");
         client.listenForMessage();

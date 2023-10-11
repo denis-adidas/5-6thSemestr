@@ -12,22 +12,32 @@ public class NotebookServlet extends HttpServlet {
 
     public void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         String uri = request.getRequestURI();
-        if( uri.equals("/lab13/Notebook/add") ) {
-            notebook.addPerson(request.getParameter("name"));
-            notebook.saveToJsonFile("autosave.json");
-        }
-        else if (uri.equals("/lab13/Notebook/number")) {
-            notebook.addPersonNumber(request.getParameter("name"), request.getParameter("number"));
-            notebook.saveToJsonFile("autosave.json");
-        }
-        else if( uri.equals("/lab13/Notebook/reset") ) {
-            notebook.reset();
-            notebook.saveToJsonFile("autosave.json");
+        boolean secondPage = false;
+
+
+        switch (uri) {
+            case "/lab13/Notebook/getName" -> {
+                notebook.addPerson(request.getParameter("name"));
+                secondPage = true;
+            }
+            case "/lab13/Notebook/number" -> {
+                notebook.addPersonNumber(request.getParameter("name"), request.getParameter("number"));
+                secondPage = false;
+                notebook.saveToJsonFile("autosave.json");
+            }
+            case "/lab13/Notebook/reset" -> {
+                notebook.reset();
+                secondPage = false;
+                notebook.saveToJsonFile("autosave.json");
+            }
         }
         PrintWriter out = response.getWriter();
         out.println("<html>\n<body>\n");
+        if (secondPage == true)
+            out.println(getOnePerson(request.getParameter("name")));
+        else
+            out.println(getMainPage());
         out.println("Last request URI was:" + uri);
-        out.println(getMainPage());
         out.println("</body>\n</html>");
     }
 
@@ -41,6 +51,34 @@ public class NotebookServlet extends HttpServlet {
         sb.append("Number: <input type=\"text\" name=\"number\">\n");
         sb.append("<input type=\"submit\" value=\"add\">\n");
         sb.append("</form>");
+
+        sb.append("<form method=\"GET\" action=\"/lab13/Notebook/getName\">\n");
+        sb.append("Name: <input type=\"text\" name=\"name\">\n");
+        sb.append("<input type=\"submit\" value=\"get\">\n");
+        sb.append("</form>");
+
+
+
+        sb.append("<a href=\"/lab13/Notebook/reset\">reset</a>");
+        return sb.toString();
+    }
+    public String getOnePerson(String name) {
+        StringBuilder sb = new StringBuilder();
+        for (NotebookModel.Person x : notebook.getPersons()) {
+            if (x.getName().equals(name))
+                sb.append("<p>").append(x.toString()).append("</p>");
+        }
+        sb.append("<form method=\"GET\" action=\"/lab13/Notebook/number\">\n");
+        sb.append("Name: <input type=\"text\" name=\"name\">\n");
+        sb.append("Number: <input type=\"text\" name=\"number\">\n");
+        sb.append("<input type=\"submit\" value=\"add\">\n");
+        sb.append("</form>");
+
+        sb.append("<form method=\"GET\" action=\"/lab13/Notebook/getName\">\n");
+        sb.append("Name: <input type=\"text\" name=\"name\">\n");
+        sb.append("<input type=\"submit\" value=\"get\">\n");
+        sb.append("</form>");
+
         sb.append("<a href=\"/lab13/Notebook/reset\">reset</a>");
         return sb.toString();
     }
