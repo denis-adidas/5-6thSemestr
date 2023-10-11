@@ -63,11 +63,17 @@ public class NotebookModel {
                 break;
             }
         }
-
         if (!personExists) {
             Person newPerson = new Person(name);
             getPersons().add(newPerson);
         }
+    }
+    public synchronized String OnePersonNumbers(String name) {
+        for ( Person x : getPersons()) {
+            if (x.getName().equals(name))
+                return name + ": " + x.getNumbers().toString();
+        }
+        return "";
     }
 
     public synchronized void addPersonNumber(String name, String number) {
@@ -99,7 +105,7 @@ public class NotebookModel {
             Gson gson = new Gson();
             return gson.fromJson(reader, NotebookModel.class);
         } catch (IOException e) {
-            e.printStackTrace(); // Handle the exception according to your needs
+            e.printStackTrace();
             return null;
         }
     }

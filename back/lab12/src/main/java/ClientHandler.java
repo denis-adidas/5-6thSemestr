@@ -1,8 +1,12 @@
+import com.google.gson.Gson;
+import com.google.gson.JsonSyntaxException;
+import com.google.gson.reflect.TypeToken;
+
 import java.io.*;
 import java.lang.ref.Cleaner;
 import java.net.Socket;
-import java.util.ArrayList;
-import java.util.Arrays;
+import java.nio.charset.StandardCharsets;
+import java.util.*;
 
 public class ClientHandler implements Runnable {
     public static ArrayList<ClientHandler> clientHandlers = new ArrayList<>();
@@ -10,6 +14,8 @@ public class ClientHandler implements Runnable {
     private BufferedReader bufferedReader;
     private BufferedWriter bufferedWriter;
     private String clientUsername;
+    private String clientPassword;
+    private final Map<String, String> userCredentials = loadUserCredentialsFromFile();
 
     public ClientHandler(Socket socket) {
         try {
@@ -17,8 +23,17 @@ public class ClientHandler implements Runnable {
             this.bufferedWriter = new BufferedWriter(new OutputStreamWriter(socket.getOutputStream()));
             this.bufferedReader = new BufferedReader(new InputStreamReader(socket.getInputStream()));
             this.clientUsername = bufferedReader.readLine();
+            this.clientPassword = bufferedReader.readLine();
+            broadcastMessageToAll("TEST: " + userCredentials.get(clientUsername) + "!");
             clientHandlers.add(this);
-            broadcastMessageToAll("SERVER: " + clientUsername + " has entered the chat!");
+
+//            if (validateCredentials(clientUsername, clientPassword)) {
+//                clientHandlers.add(this);
+//                broadcastMessageToAll("SERVER: " + clientUsername + " has entered the chat!");
+//            } else {
+//                broadcastMessageToAll("Login or password not valid");
+//                closeEverything(socket, bufferedReader, bufferedWriter);
+//            }
         } catch (IOException e) {
             closeEverything(socket, bufferedReader, bufferedWriter);
         }
@@ -94,5 +109,25 @@ public class ClientHandler implements Runnable {
         } catch (IOException e) {
             e.printStackTrace();
         }
+    }
+
+private boolean validateCredentials(String username, String password) {
+    String storedPassword = userCredentials.get(username);
+    return storedPassword.equals(password);
+}
+    private Map<String, String> loadUserCredentialsFromFile() {
+        Map<String, String> credentials = new HashMap<>();
+        try (BufferedReader reader = new BufferedReader(new FileReader("users.txt"))) {
+            String line;
+            while ((line = reader.readLine()) != null) {
+                String[] parts = line.split(":");
+                if (parts.length == 2) {
+                    credentials.put(parts[0], parts[1]);
+                }
+            }
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+        return credentials;
     }
 }
