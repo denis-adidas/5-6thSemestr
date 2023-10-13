@@ -1,7 +1,3 @@
-import com.google.gson.Gson;
-import com.google.gson.JsonSyntaxException;
-import com.google.gson.reflect.TypeToken;
-
 import java.io.*;
 import java.lang.ref.Cleaner;
 import java.net.Socket;
@@ -24,16 +20,16 @@ public class ClientHandler implements Runnable {
             this.bufferedReader = new BufferedReader(new InputStreamReader(socket.getInputStream()));
             this.clientUsername = bufferedReader.readLine();
             this.clientPassword = bufferedReader.readLine();
-            broadcastMessageToAll("TEST: " + userCredentials.get(clientUsername) + "!");
-            clientHandlers.add(this);
 
-//            if (validateCredentials(clientUsername, clientPassword)) {
-//                clientHandlers.add(this);
-//                broadcastMessageToAll("SERVER: " + clientUsername + " has entered the chat!");
-//            } else {
-//                broadcastMessageToAll("Login or password not valid");
-//                closeEverything(socket, bufferedReader, bufferedWriter);
-//            }
+            if (validateCredentials(clientUsername, clientPassword)) {
+                clientHandlers.add(this);
+                broadcastMessageToUser("You have successfully entered in the chat.", clientUsername);
+                broadcastMessageToAll("SERVER: " + clientUsername + " has entered the chat!");
+            } else {
+                clientHandlers.add(this);
+                broadcastMessageToUser("Login or password not valid", clientUsername);
+                removeClienthandler();
+            }
         } catch (IOException e) {
             closeEverything(socket, bufferedReader, bufferedWriter);
         }

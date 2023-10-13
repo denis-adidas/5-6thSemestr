@@ -26,6 +26,8 @@ public class Client {
         try {
             bufferedWriter.write(login);
             bufferedWriter.newLine();
+            bufferedWriter.write(password);
+            bufferedWriter.newLine();
             bufferedWriter.flush();
 
             Scanner scanner = new Scanner(System.in);
@@ -78,8 +80,9 @@ public class Client {
         System.out.println("Enter your username login: ");
         String login = scanner.nextLine();
         System.out.println("Enter your login password: ");
+        String password = scanner.nextLine();
         Socket socket = new Socket("localhost", 1234);
-        Client client = new Client(socket, login, "123");
+        Client client = new Client(socket, login, password);
         client.listenForMessage();
         client.sendMessage();
     }
