@@ -4,5 +4,8 @@ project(lab02)
 set(CMAKE_CXX_STANDARD 17)
 
 add_executable(lab02 main.cpp
-        Cipher.cpp
-        Cipher.hpp)
+        RC6.cpp
+        RC6.hpp
+        Util.cpp
+        Util.hpp
+)
