@@ -86,6 +86,9 @@ void encryptBMPFile(RC6& rc6, const std::string& filename ) {
     std::vector<uint32_t> decryptedtext = rc6.decryptCBC(iv, ciphertext);
     std::string decryptedPixelData = uint32VectorToString(decryptedtext);
     writeBinaryFile("D:\\CLion_projects\\crypto\\lab02\\data\\image_out.bmp",  imageData.substr(0, 54) + decryptedPixelData);
+
+    std::cout << getDistribution(ciphertext) << std::endl;
+    std::cout << countCorell(ciphertext, decryptedtext) << std::endl;
 }
 
 std::vector<uint32_t> generateRandomKey() {
@@ -111,4 +114,42 @@ std::vector<uint32_t> generateRandomIV() {
     }
 
     return iv;
+}
+
+double getDistribution(std::vector<uint32_t>& data) {
+    int N = 32 * data.size();
+    int count = 0;
+
+    for (int i = 0; i < data.size(); i++) {
+        uint32_t buffer = data[i];
+
+        for (int j = 0; j < 32; j++) {
+            uint32_t b = (buffer >> j) & 1;
+            count += b;
+        }
+    }
+
+    return (double)count / N;
+}
+
+double countCorell(std::vector<uint32_t>& plain, std::vector<uint32_t>& cipher) {
+    int N = 32 * cipher.size();
+    int corell = 0;
+
+    if (plain.size() < cipher.size()) {
+        return -1.0;
+    }
+
+    for (int i = 0; i < cipher.size(); i++) {
+        uint32_t p = plain[i];
+        uint32_t c = cipher[i];
+
+        for (int j = 0; j < 32; j++) {
+            uint32_t tmpP = (p >> j) & 1;
+            uint32_t tmpC = (c >> j) & 1;
+            corell += (2 * tmpP - 1) * (2 * tmpC - 1);
+        }
+    }
+
+    return (double)corell / N;
 }

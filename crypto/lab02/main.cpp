@@ -14,5 +14,7 @@ int main() {
     encryptBMPFile(rc6,R"(D:\CLion_projects\crypto\lab02\data\image.bmp)");
 
 
+
+
     return 0;
 }
