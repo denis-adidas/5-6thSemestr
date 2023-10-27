@@ -1,9 +1,8 @@
 #include "Util.hpp"
+#include "RC6.hpp"
 
 std::vector<uint32_t> stringToUint32Vector(const std::string& str) {
     std::vector<uint32_t> result;
-    if (str.size() % 16 != 0)
-        return result;
     const char* data = str.c_str();
     size_t length = str.length();
 
@@ -37,6 +36,12 @@ bool readBinaryFile(const std::string &filename, std::string& buffer) {
 
     return true;
 }
+//std::vector<uint32_t> readBMPFile(const std::string &filename, std::string& buffer) {
+//    readBinaryFile(filename, buffer);
+//    std::string pixelData = buffer.substr(54); // 54 байта - размер заголовка BMP-файла
+//    std::vector<uint32_t> pixelUint32Data = stringToUint32Vector(pixelData);
+//    return pixelUint32Data;
+//}
 bool writeBinaryFile(const std::string &filename, const std::string& data) {
     std::ofstream file(filename, std::ios::binary);
     if (!file.is_open()) {
@@ -54,12 +59,35 @@ bool writeBinaryFile(const std::string &filename, const std::string& data) {
 std::string uint32VectorToString(const std::vector<uint32_t>& data) {
     std::string result;
     for (uint32_t value : data) {
+//        std::cout <<"Block:" << std::hex << value;
         for (int i = 3; i >= 0; i--) {
+//            std::cout << " '" << static_cast<char>((value >> (i * 8)) & 0xFF) << "'!";
             result.push_back(static_cast<char>((value >> (i * 8)) & 0xFF));
         }
+
+//        std::cout << std::endl <<result << "!" << std::endl;
     }
     return result;
 }
+
+void encryptBMPFile(RC6& rc6, const std::string& filename ) {
+    std::string imageData;
+    readBinaryFile(filename, imageData);
+
+    std::string pixelData = imageData.substr(54);
+    std::vector<uint32_t> pixelUint32Data = stringToUint32Vector(pixelData);
+
+    std::vector<uint32_t> iv = generateRandomIV();
+
+    std::vector<uint32_t> ciphertext = rc6.encryptCBC(iv, pixelUint32Data);
+    std::string encryptedPixelData = uint32VectorToString(ciphertext);
+    writeBinaryFile("D:\\CLion_projects\\crypto\\lab02\\data\\image_encrypt.bmp", imageData.substr(0, 54) + encryptedPixelData );
+
+    std::vector<uint32_t> decryptedtext = rc6.decryptCBC(iv, ciphertext);
+    std::string decryptedPixelData = uint32VectorToString(decryptedtext);
+    writeBinaryFile("D:\\CLion_projects\\crypto\\lab02\\data\\image_out.bmp",  imageData.substr(0, 54) + decryptedPixelData);
+}
+
 std::vector<uint32_t> generateRandomKey() {
     std::vector<uint32_t> key;
     std::random_device rd;
