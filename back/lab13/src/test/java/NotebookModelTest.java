@@ -1,3 +1,4 @@
+import model.NotebookModel;
 import org.junit.Before;
 import org.junit.Test;
 
