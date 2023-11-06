@@ -35,8 +35,12 @@ public class UserManager {
     }
 
     public synchronized static UserManager loadFromJsonFile(String filePath) {
+        String userDirectory = FileSystems.getDefault()
+                .getPath("")
+                .toAbsolutePath()
+                .getParent().toString();
         try (Reader reader = new BufferedReader(new InputStreamReader(
-                new FileInputStream(filePath), StandardCharsets.UTF_8))) {
+                new FileInputStream(userDirectory + "/webapps/lab15/" + filePath), StandardCharsets.UTF_8))) {
             Gson gson = new Gson();
             return gson.fromJson(reader, UserManager.class);
         } catch (IOException e) {

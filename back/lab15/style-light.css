@@ -1,0 +1,114 @@
+@font-face {
+    font-family: 'Inter';
+    src: url('WEB-INF/fonts/Inter-Regular.woff2') format('woff2'),
+    url('WEB-INF/fonts/Inter-Regular.woff') format('woff');
+    font-weight: 400;
+    font-style: normal;
+}
+
+body {
+    background-color: #f5f5f5;
+    font-family: Arial, sans-serif;
+    text-align: center;
+    background-image: url('back.jpg'); /* Замените 'your-image.jpg' на путь к вашей картинке */
+    background-size: cover; /* Растягивание изображения на всю площадь экрана */
+    background-position: center; /* Выравнивание изображения по центру */
+    background-repeat: no-repeat; /* Отключение повторения изображения */
+}
+
+.container {
+    max-width: 600px;
+    margin: 0 auto;
+    padding: 20px;
+    background-color: #fff;
+    border-radius: 5px;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+}
+
+h1 {
+    color: #333;
+}
+
+h2 {
+    color: #333;
+}
+
+a {
+    text-decoration: none;
+    color: #007BFF;
+}
+
+a:hover {
+    text-decoration: underline;
+}
+.ad-container {
+    background-color: rgba(255, 255, 255, 0.8); /* Полупрозрачный фон */
+    border: 1px solid #ccc; /* Граница для объявления */
+    padding: 20px; /* Внутренний отступ для объявления */
+    margin: 20px 0; /* Внешний отступ для объявления */
+    border-radius: 5px; /* Скругленные углы */
+    max-width: 600px; /* Максимальная ширина контейнера */
+    margin: 0 auto; /* Центрирование контейнера по горизонтали */
+}
+
+.ad-title {
+    font-weight: bold;
+    margin: 10px 0; /* Отступ между заголовком и текстом */
+}
+
+.ad-text {
+    margin: 10px 0; /* Отступ между текстом и данными пользователя */
+    color: #555; /* Уменьшение интенсивности цвета шрифта */
+}
+
+.ad-username {
+    color: #777;
+}
+
+.ad-timestamp {
+    color: #777;
+}
+form {
+    margin: 0 auto;
+    max-width: 80%;
+}
+
+label {
+    display: block;
+    font-weight: bold;
+    margin-top: 10px;
+    text-align: center;
+}
+
+input, textarea {
+    width: 100%;
+    padding: 10px;
+    margin-top: 10px; /* Увеличенный отступ между title и text */
+    border: 1px solid #ccc;
+    border-radius: 5px;
+    max-width: 80%;
+    margin: 0 auto;
+    height: 35px;
+    color: #555; /* Уменьшение интенсивности цвета шрифта */
+}
+
+button {
+    background-color: #66a4d3;
+    color: #fff;
+    padding: 10px 20px;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    margin-top: 10px;
+}
+/* Стили для элемента <audio> */
+audio {
+    width: 100%; /* Расширьте элемент до 100% ширины контейнера */
+    margin-top: 20px; /* Отступ сверху */
+    background-color: rgba(255, 255, 255, 0.8); /* Полупрозрачный фон */
+    border: 1px solid #ccc; /* Граница */
+    border-radius: 5px; /* Скругленные углы */
+    max-width: 600px; /* Максимальная ширина контейнера */
+    margin: 0 auto; /* Центрирование по горизонтали */
+}
+

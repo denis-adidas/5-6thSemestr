@@ -8,7 +8,7 @@ import java.io.IOException;
 
 public class LoginServlet extends HttpServlet {
 
-    UserManager userManager = UserManager.loadFromJsonFile("E:\\apache-tomcat-9.0.80\\webapps\\lab15\\autosave15.json");
+    UserManager userManager = UserManager.loadFromJsonFile("autosave15.json");
 
 
     @SneakyThrows
@@ -32,6 +32,7 @@ public class LoginServlet extends HttpServlet {
     }
 
     public boolean checkAuthenticator(String username, String password) {
+
         User user = userManager.getUserByName(username);
 
         if (user != null && user.getPassword().equals(password)) {

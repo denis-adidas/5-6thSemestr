@@ -1,8 +1,9 @@
 <!DOCTYPE html>
 <html>
 <head>
+    <link rel="stylesheet" type="text/css" href="style-light.css">
     <meta charset="UTF-8">
-    <title>Ad board</title>
+    <title>Ad boards</title>
 </head>
 <body>
 <form action="Login" method="post">

@@ -13,7 +13,7 @@ public class UserManagerTest {
     @Before
     public void setUp() {
         userManager = new UserManager();
-        UserManager.loadFromJsonFile("E:\\apache-tomcat-9.0.80\\webapps\\lab15\\autosave15.json");
+        UserManager.loadFromJsonFile("autosave15.json");
     }
 
     @Test
@@ -48,14 +48,14 @@ public class UserManagerTest {
     public void testCheckAuthenticatorValidUser() {
         LoginServlet ls = new LoginServlet();
 
-        assertTrue(ls.checkAuthenticator("User5", "1"));
+        assertTrue(ls.checkAuthenticator("User1", "1"));
         assertTrue(ls.checkAuthenticator("User2", "2"));
         assertTrue(ls.checkAuthenticator("User11", "11"));
     }
     @Test
     public void testReturnUserParametrs() {
         LoginServlet ls = new LoginServlet();
-        UserManager userManager = UserManager.loadFromJsonFile("autosave.json");
+        UserManager userManager = UserManager.loadFromJsonFile("autosave15.json");
         User user = userManager.getUserByName("User1");
         assertEquals("User5", user.getName());
         assertEquals("1", user.getPassword());
