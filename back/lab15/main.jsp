@@ -13,6 +13,7 @@
 
 <h1>Fan page about Tyler, The creator &#x1F496;</h1>
 
+
 <% String username = (String)session.getAttribute("username");
     if (username != null) { %>
 <h2>Welcome, <%= username %>!</h2>
@@ -45,8 +46,16 @@
 <% } %>
 <audio controls autoplay>
     <source src="audio.mp3" type="audio/mpeg">
-
 </audio>
+
+<p class="left-align">
+    <img src="ilovetyler1.jpg" alt="AAHHHH ITS TYLER"  class="small-image">
+</p>
+<style>
+    .small-image {
+        max-width: 20%;
+    }
+</style>
 
 </body>
 </html>

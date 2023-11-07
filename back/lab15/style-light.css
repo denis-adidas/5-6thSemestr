@@ -101,7 +101,9 @@ button {
     cursor: pointer;
     margin-top: 10px;
 }
-/* Стили для элемента <audio> */
+.right-align {
+    text-align: right; /* Выравниваем содержимое тега по правому краю */
+}
 audio {
     width: 100%; /* Расширьте элемент до 100% ширины контейнера */
     margin-top: 20px; /* Отступ сверху */
