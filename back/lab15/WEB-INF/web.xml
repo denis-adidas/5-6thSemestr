@@ -21,6 +21,10 @@
         <servlet-name>AddAd</servlet-name>
         <servlet-class>org.suai.lab15.AddAdServlet</servlet-class>
     </servlet>
+    <servlet>
+        <servlet-name>DeleteAllAdds</servlet-name>
+        <servlet-class>org.suai.lab15.DeleteAllAdsServlet</servlet-class>
+    </servlet>
 
 
     <servlet-mapping>
@@ -34,6 +38,10 @@
     <servlet-mapping>
         <servlet-name>AddAd</servlet-name>
         <url-pattern>/AddAd</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>DeleteAllAdds</servlet-name>
+        <url-pattern>/DeleteAllAds</url-pattern>
     </servlet-mapping>
 
 

@@ -33,6 +33,7 @@ public class AddAdServlet extends HttpServlet {
                 ArrayList<AdModel> allAds = (ArrayList<AdModel>) getServletContext().getAttribute("ads");
                 allAds.add(newAd);
             }
+
         }
         response.sendRedirect(request.getContextPath());
     }

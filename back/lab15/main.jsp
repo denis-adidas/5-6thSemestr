@@ -5,7 +5,6 @@
 <html>
 <head>
     <link rel="stylesheet" type="text/css" href="style-light.css" id="light-theme">
-<%--    <link rel="stylesheet" type="text/css" href="style-dark.css" id="dark-theme">--%>
     <meta charset="UTF-8">
     <title>Fan page about Tyler, The creator</title>
 </head>
@@ -31,6 +30,9 @@
 <a href="${pageContext.request.contextPath}/Login">Login</a>
 <% } %>
 <br>
+<form action="/lab15/DeleteAllAds" method="post">
+    <button type="submit">Delete All Ads</button>
+</form>
 
 <h2>Ads List</h2>
 <% ArrayList<AdModel> ads = (ArrayList<AdModel>) request.getServletContext().getAttribute("ads");
