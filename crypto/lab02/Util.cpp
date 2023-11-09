@@ -75,9 +75,9 @@ void encryptBMPFile(RC6& rc6, const std::string& filename ) {
     std::string encryptedPixelData = uint32VectorToString(ciphertext);
     writeBinaryFile("../data/image_encrypt.bmp", imageData.substr(0, 54) + encryptedPixelData );
 
-    std::cout << autoCorrelationTest(ciphertext, ciphertext) << "!" << std::endl;
-    runLengthTest(ciphertext);
-    frequencyTest(ciphertext);
+//    std::cout << autocorrelationTest(ciphertext) << "!" << std::endl;
+    std::cout << serialTest(ciphertext) << std::endl;
+//    frequencyTest(ciphertext);
 
     ciphertext[17] = 0x00000000;
 

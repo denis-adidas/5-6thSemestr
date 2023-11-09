@@ -1,49 +1,75 @@
 #include "analysis.hpp"
 
-double autoCorrelationTest(const std::vector<uint32_t>& sequence1, const std::vector<uint32_t>& sequence2) {
+int calculateA(const std::vector<uint32_t>& sequence, size_t d) {
+    size_t n = sequence.size();
+    int result = 0;
 
-    size_t n = sequence1.size();
-
-    double sum1 = 0.0, sum2 = 0.0, sum3 = 0.0;
-
-    for (size_t i = 0; i < n; ++i) {
-        sum1 += sequence1[i];
-        sum2 += sequence2[i];
-        sum3 += sequence1[i] * sequence2[i];
+    for (size_t i = 0; i < n - d; ++i) {
+        result += __builtin_popcount(sequence[i] ^ sequence[i + d]);
     }
 
-    double mean1 = sum1 / n;
-    double mean2 = sum2 / n;
-    double mean3 = sum3 / n;
-
-    double cov = mean3 - mean1 * mean2;
-    double stdDev1 = sqrt((sum1 * sum1 - n * mean1 * mean1) / n);
-    double stdDev2 = sqrt((sum2 * sum2 - n * mean2 * mean2) / n);
-
-    return cov / (stdDev1 * stdDev2);
+    return result;
 }
 
+double autocorrelationTest(const std::vector<uint32_t>& sequence) {
+    size_t n = sequence.size();
 
-void runLengthTest(const std::vector<uint32_t>& sequence) {
-    int n = sequence.size();
-    int runLength = 0;
-    std::vector<int> runLengthCounts(n, 0);
+    double sum = 0.0;
+    for (size_t d = 1; d <= n / 2; ++d) {
+        int A_d = calculateA(sequence, d);
+        double X5 = 2.0 * (A_d - (n - d)) / std::sqrt(n - d);
 
-    for (int i = 1; i < n; ++i) {
-        if ((sequence[i] & 1) == (sequence[i - 1] & 1)) {
-            runLength++;
-        } else {
-            runLengthCounts[runLength]++;
-            runLength = 0;
+        sum += X5;
+    }
+    return sum / (n/2);
+}
+
+int countSerials(const std::vector<uint32_t>& sequence, size_t serialLength) {
+    size_t n = sequence.size() * 32;
+    int count = 0;
+
+    for (size_t i = 0; i < n - serialLength + 1; ++i) {
+        uint32_t currentBits = sequence[i / 32] >> (i % 32);
+        uint32_t mask = (1 << serialLength) - 1;
+
+        if ((currentBits & mask) == (currentBits << (32 - serialLength) & mask)) {
+            ++count;
+            i += serialLength - 1;
         }
     }
 
-    std::cout << "Тест серий:" << std::endl;
-    for (int length = 1; length < n; ++length) {
-        std::cout << "Длина серии " << length << ": " << runLengthCounts[length] << std::endl;
-    }
+    return count;
 }
+double serialTest(const std::vector<uint32_t>& sequence) {
+    size_t n = sequence.size() * 32;
+    size_t k = 0;
 
+    while ((n - k + 3) >= (1 << (k + 2))) {
+        ++k;
+    }
+
+    std::vector<double> ei(k, 0.0);
+    for (size_t i = 1; i <= k; ++i) {
+        ei[i - 1] = static_cast<double>(n - i + 3) / static_cast<double>(1 << (i + 2));
+    }
+
+    std::vector<int> Bi(k, 0);
+    std::vector<int> Gi(k, 0);
+
+    for (size_t i = 1; i <= k; ++i) {
+        Bi[i - 1] = countSerials(sequence, i);
+        Gi[i - 1] = n - Bi[i - 1];
+    }
+
+    double X4 = 0.0;
+
+    for (size_t i = 0; i < k; ++i) {
+        X4 += std::pow(Bi[i] - ei[i], 2) / ei[i];
+        X4 += std::pow(Gi[i] - ei[i], 2) / ei[i];
+    }
+
+    return X4;
+}
 void frequencyTest(const std::vector<uint32_t>& sequence) {
     int n = sequence.size();
     int countZeros = 0;
