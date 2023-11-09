@@ -1,21 +1,26 @@
 #include "analysis.hpp"
 
-void autocorrelationTest(const std::vector<uint32_t>& sequence) {
-    int n = sequence.size();
-    std::vector<double> autocorrelation(n, 0.0);
+double autoCorrelationTest(const std::vector<uint32_t>& sequence1, const std::vector<uint32_t>& sequence2) {
 
-    for (int lag = 1; lag < n; ++lag) {
-        autocorrelation[lag] = 0.0;
-        for (int i = 0; i < n - lag; ++i) {
-            autocorrelation[lag] += (sequence[i] & 1) == (sequence[i + lag] & 1) ? 1 : -1;
-        }
-        autocorrelation[lag] /= n - lag;
+    size_t n = sequence1.size();
+
+    double sum1 = 0.0, sum2 = 0.0, sum3 = 0.0;
+
+    for (size_t i = 0; i < n; ++i) {
+        sum1 += sequence1[i];
+        sum2 += sequence2[i];
+        sum3 += sequence1[i] * sequence2[i];
     }
 
-    std::cout << "Автокорреляционный тест:" << std::endl;
-    for (int lag = 1; lag < n; ++lag) {
-        std::cout << "Смещение " << lag << ": " << autocorrelation[lag] << std::endl;
-    }
+    double mean1 = sum1 / n;
+    double mean2 = sum2 / n;
+    double mean3 = sum3 / n;
+
+    double cov = mean3 - mean1 * mean2;
+    double stdDev1 = sqrt((sum1 * sum1 - n * mean1 * mean1) / n);
+    double stdDev2 = sqrt((sum2 * sum2 - n * mean2 * mean2) / n);
+
+    return cov / (stdDev1 * stdDev2);
 }
 
 

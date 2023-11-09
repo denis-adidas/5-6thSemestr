@@ -214,8 +214,6 @@ std::vector<uint32_t> RC6::encryptDataWithInvert(const std::vector<uint32_t>& da
     std::vector<uint32_t> plaintextWithPadding = data;
     applyPKCS7Padding(plaintextWithPadding, 4);
 
-    invertFirstBits(plaintextWithPadding);
-
     std::vector<uint32_t> ciphertext = encrypt(plaintextWithPadding);
 
 
@@ -224,8 +222,6 @@ std::vector<uint32_t> RC6::encryptDataWithInvert(const std::vector<uint32_t>& da
 
 std::vector<uint32_t> RC6::decryptDataWithInvert(const std::vector<uint32_t>& data) {
     std::vector<uint32_t> plaintextWithPadding = decrypt(data);
-
-    invertFirstBits(plaintextWithPadding);
 
 
     bool paddingValid = removePKCS7Padding(plaintextWithPadding);
