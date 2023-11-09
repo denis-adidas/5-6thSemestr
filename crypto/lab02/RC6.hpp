@@ -9,13 +9,21 @@ public:
     RC6(const std::vector<uint32_t>& key);
     std::vector<uint32_t> encrypt(const std::vector<uint32_t>& plaintext);
     std::vector<uint32_t> decrypt(const std::vector<uint32_t>& ciphertext);
+
     std::vector<uint32_t> encryptCBC(const std::vector<uint32_t>& iv, const std::vector<uint32_t >& plaintext);
     std::vector<uint32_t> decryptCBC(const std::vector<uint32_t>& iv, const std::vector<uint32_t>& ciphertext);
+
     void applyPKCS7Padding(std::vector<uint32_t>& data, size_t blockSize);
     bool removePKCS7Padding(std::vector<uint32_t>& data);
-    std::vector<uint32_t> encryptData(const std::vector<uint32_t>& data);
 
+    std::vector<uint32_t> encryptData(const std::vector<uint32_t>& data);
     std::vector<uint32_t> decryptData(const std::vector<uint32_t>& ciphertext);
+
+    void invertFirstBits(std::vector<uint32_t>& block);
+    void invertSecondBits(std::vector<uint32_t>& block);
+
+    std::vector<uint32_t> encryptDataWithInvert(const std::vector<uint32_t>& data);
+    std::vector<uint32_t> decryptDataWithInvert(const std::vector<uint32_t>& ciphertext);
 
 private:
     static const int rounds = 20;

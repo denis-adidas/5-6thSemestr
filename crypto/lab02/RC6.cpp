@@ -89,7 +89,7 @@ std::vector<uint32_t> RC6::encryptCBC(const std::vector<uint32_t>& iv, const std
             currentBlock[j] = plaintext[i + j] ^ previousBlock[j];
         }
 
-        std::vector<uint32_t> encryptedBlock = encryptData(currentBlock);
+        std::vector<uint32_t> encryptedBlock = encryptDataWithInvert(currentBlock);
 
         ciphertext.insert(ciphertext.end(), encryptedBlock.begin(), encryptedBlock.end());
 
@@ -103,7 +103,7 @@ std::vector<uint32_t> RC6::decryptCBC(const std::vector<uint32_t>& iv, const std
     std::vector<uint32_t> previousBlock = iv;
     for (size_t i = 0; i < ciphertext.size(); i += 4) {
         std::vector<uint32_t> currentBlock = std::vector<uint32_t>(ciphertext.begin() + i, ciphertext.begin() + i + 4);
-        std::vector<uint32_t> decryptedBlock = decryptData(currentBlock);
+        std::vector<uint32_t> decryptedBlock = decryptDataWithInvert(currentBlock);
 
         for (int j = 0; j < 4; j++) {
             decryptedBlock[j] ^= previousBlock[j];
@@ -129,10 +129,10 @@ void RC6::keyShedule(const std::vector<uint32_t>& key) {
         L[i] = key[i];
     }
 
-    uint32_t p = 0xb7e15163;  // Pw, a constant
+    uint32_t p = 0xb7e15163;
     S[0] = p;
 
-    uint32_t q = 0x9e3779b9;  // Qw, another constant
+    uint32_t q = 0x9e3779b9;
     for (int i = 1; i < 2 * rounds + 3; ++i) {
         S[i] = S[i - 1] + q;
     }
@@ -158,12 +158,10 @@ void RC6::applyPKCS7Padding(std::vector<uint32_t>& data, size_t blockSize) {
     size_t paddingSize = blockSize - (data.size() % blockSize);
 
     if (paddingSize > 0 && paddingSize < blockSize) {
-        // Добавляем байты паддинга
         for (size_t i = 0; i < paddingSize; ++i) {
             data.push_back(static_cast<uint32_t>(paddingSize));
         }
     } else if (paddingSize == 0) {
-        // Добавляем блок паддинга
         for (size_t i = 0; i < blockSize; ++i) {
             data.push_back(static_cast<uint32_t>(blockSize));
         }
@@ -186,6 +184,17 @@ bool RC6::removePKCS7Padding(std::vector<uint32_t>& data) {
     return false;
 }
 
+void RC6::invertFirstBits(std::vector<uint32_t>& block) {
+    for (int i = 0; i < block.size(); ++i) {
+        block[i] ^= (0xFFFFFFFF << (wordSize / 2));
+    }
+}
+void RC6::invertSecondBits(std::vector<uint32_t>& block) {
+    for (int i = 0; i < block.size(); ++i) {
+        block[i] ^= (0xFFFFFFFF >> (wordSize / 2));
+    }
+}
+
 std::vector<uint32_t> RC6::encryptData(const std::vector<uint32_t>& data) {
     std::vector<uint32_t> plaintextWithPadding = data;
     applyPKCS7Padding(plaintextWithPadding, 4);
@@ -195,6 +204,29 @@ std::vector<uint32_t> RC6::encryptData(const std::vector<uint32_t>& data) {
 
 std::vector<uint32_t> RC6::decryptData(const std::vector<uint32_t>& ciphertext) {
     std::vector<uint32_t> plaintextWithPadding = decrypt(ciphertext);
+
+    bool paddingValid = removePKCS7Padding(plaintextWithPadding);
+
+    return plaintextWithPadding;
+}
+
+std::vector<uint32_t> RC6::encryptDataWithInvert(const std::vector<uint32_t>& data) {
+    std::vector<uint32_t> plaintextWithPadding = data;
+    applyPKCS7Padding(plaintextWithPadding, 4);
+
+    invertFirstBits(plaintextWithPadding);
+
+    std::vector<uint32_t> ciphertext = encrypt(plaintextWithPadding);
+
+
+    return ciphertext;
+}
+
+std::vector<uint32_t> RC6::decryptDataWithInvert(const std::vector<uint32_t>& data) {
+    std::vector<uint32_t> plaintextWithPadding = decrypt(data);
+
+    invertFirstBits(plaintextWithPadding);
+
 
     bool paddingValid = removePKCS7Padding(plaintextWithPadding);
 

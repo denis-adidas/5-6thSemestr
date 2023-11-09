@@ -8,4 +8,6 @@ add_executable(lab02 main.cpp
         RC6.hpp
         Util.cpp
         Util.hpp
+        analysis.cpp
+        analysis.hpp
 )
