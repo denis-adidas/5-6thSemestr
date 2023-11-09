@@ -60,3 +60,17 @@ void frequencyTest(const std::vector<uint32_t>& sequence) {
     std::cout << "Частота 0: " << static_cast<double>(countZeros) / n << ", Ожидаемая: " << expectedFrequency << std::endl;
     std::cout << "Частота 1: " << static_cast<double>(countOnes) / n << ", Ожидаемая: " << expectedFrequency << std::endl;
 }
+
+std::vector<int> analyzeBitFrequency(const std::vector<uint32_t>& sequence1, const std::vector<uint32_t>& sequence2) {
+    size_t n = sequence1.size() * 32;
+    std::vector<int> bitFrequency(n, 0);
+
+    for (size_t i = 0; i < sequence1.size(); ++i) {
+        uint32_t xorResult = sequence1[i] ^ sequence2[i];
+        for (int j = 0; j < 32; ++j) {
+            bitFrequency[i * 32 + j] += (xorResult >> j) & 1;
+        }
+    }
+
+    return bitFrequency;
+}
