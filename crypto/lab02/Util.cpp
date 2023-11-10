@@ -2,6 +2,23 @@
 #include "RC6.hpp"
 #include "analysis.hpp"
 
+std::vector<uint32_t> invertFirstBits(const std::vector<uint32_t>& block) {
+    int wordSize = RC6::getWordSize();
+    std::vector<uint32_t> temp = block;
+    for (int i = 0; i < block.size(); ++i) {
+        temp[i] ^= (0xFFFFFFFF << (wordSize / 2));
+    }
+    return block;
+}
+std::vector<uint32_t> invertSecondBits(const std::vector<uint32_t>& block) {
+    int wordSize = RC6::getWordSize();;
+    std::vector<uint32_t> temp = block;
+    for (int i = 0; i < block.size(); ++i) {
+        temp[i] ^= (0xFFFFFFFF >> (wordSize / 2));
+    }
+    return block;
+}
+
 std::vector<uint32_t> stringToUint32Vector(const std::string& str) {
     std::vector<uint32_t> result;
     const char* data = str.c_str();
@@ -70,17 +87,35 @@ void encryptBMPFile(RC6& rc6, const std::string& filename ) {
     std::vector<uint32_t> pixelUint32Data = stringToUint32Vector(pixelData);
 
     std::vector<uint32_t> iv = generateRandomIV();
+    //lab3 begins here
+    //Invert
+    std::vector<uint32_t> firstBlocksInvert = invertFirstBits(pixelUint32Data);
+    std::vector<uint32_t> secondBlocksInvert = invertSecondBits(pixelUint32Data);
+
+    std::vector<uint32_t> cipherTextFirst = rc6.encryptCBC(iv, firstBlocksInvert);
+    std::vector<uint32_t> cipherTextSecond = rc6.encryptCBC(iv, secondBlocksInvert);
+
+    std::cout << "First data auto corellation test: " << autocorrelationTest(firstBlocksInvert) << std::endl;
+    std::cout << "Second data auto corellation test: " << autocorrelationTest(secondBlocksInvert) << std::endl;
+
+    std::cout << "First serial test: " << serialTest(firstBlocksInvert) << std::endl;
+    std::cout << "Second serial test: " << serialTest(secondBlocksInvert) << std::endl;
+
+    //first frequency test
+    frequencyTest(firstBlocksInvert);
+    //second frequency test
+    frequencyTest(secondBlocksInvert);
+
+    std::vector<int> analyzfrequency;
+    analyzfrequency = analyzeBitFrequency(firstBlocksInvert, secondBlocksInvert);
+
+    //end lab3
 
     std::vector<uint32_t> ciphertext = rc6.encryptCBC(iv, pixelUint32Data);
     std::string encryptedPixelData = uint32VectorToString(ciphertext);
     writeBinaryFile("../data/image_encrypt.bmp", imageData.substr(0, 54) + encryptedPixelData );
 
-//    std::cout << autocorrelationTest(ciphertext) << "!" << std::endl;
-    std::cout << serialTest(ciphertext) << std::endl;
-//    frequencyTest(ciphertext);
-
-    ciphertext[17] = 0x00000000;
-
+    ciphertext[20] = 0x00000000;
 
     std::vector<uint32_t> decryptedtext = rc6.decryptCBC(iv, ciphertext);
     std::string decryptedPixelData = uint32VectorToString(decryptedtext);
@@ -170,3 +205,5 @@ double countCorell(std::vector<uint32_t>& plain, std::vector<uint32_t>& cipher) 
 
     return (double)corell / N;
 }
+
+

@@ -25,6 +25,10 @@ public:
     std::vector<uint32_t> encryptDataWithInvert(const std::vector<uint32_t>& data);
     std::vector<uint32_t> decryptDataWithInvert(const std::vector<uint32_t>& ciphertext);
 
+    static int getWordSize() {
+        return wordSize;
+    }
+
 private:
     static const int rounds = 20;
     static const int wordSize = 32;
