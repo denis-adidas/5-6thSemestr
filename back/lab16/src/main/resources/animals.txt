@@ -1,0 +1,3 @@
+cat:ca1,cat2,cat3
+dog:dog1,DOOOG,dodododggg
+parrot:parrot(
