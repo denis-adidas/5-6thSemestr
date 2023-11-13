@@ -83,7 +83,7 @@ void frequencyTest(const std::vector<uint32_t>& sequence) {
     double expectedFrequency = 0.5;
 
     std::cout << "For 0: " << static_cast<double>(countZeros) / n << ", Expected: " << expectedFrequency << std::endl;
-    std::cout << "For1 1: " << static_cast<double>(countOnes) / n << ", Expected: " << expectedFrequency << std::endl;
+    std::cout << "For 1: " << static_cast<double>(countOnes) / n << ", Expected: " << expectedFrequency << std::endl;
 }
 
 std::vector<int> analyzeBitFrequency(const std::vector<uint32_t>& sequence1, const std::vector<uint32_t>& sequence2) {

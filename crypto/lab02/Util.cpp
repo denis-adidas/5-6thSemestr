@@ -87,6 +87,7 @@ void encryptBMPFile(RC6& rc6, const std::string& filename ) {
     std::vector<uint32_t> pixelUint32Data = stringToUint32Vector(pixelData);
 
     std::vector<uint32_t> iv = generateRandomIV();
+
     //lab3 begins here
     //Invert
     std::vector<uint32_t> firstBlocksInvert = invertFirstBits(pixelUint32Data);
@@ -95,8 +96,8 @@ void encryptBMPFile(RC6& rc6, const std::string& filename ) {
     std::vector<uint32_t> cipherTextFirst = rc6.encryptCBC(iv, firstBlocksInvert);
     std::vector<uint32_t> cipherTextSecond = rc6.encryptCBC(iv, secondBlocksInvert);
 
-    std::cout << "First data auto corellation test: " << autocorrelationTest(firstBlocksInvert) << std::endl;
-    std::cout << "Second data auto corellation test: " << autocorrelationTest(secondBlocksInvert) << std::endl;
+//    std::cout << "First data auto corellation test: " << autocorrelationTest(firstBlocksInvert) << std::endl;
+//    std::cout << "Second data auto corellation test: " << autocorrelationTest(secondBlocksInvert) << std::endl;
 
     std::cout << "First serial test: " << serialTest(firstBlocksInvert) << std::endl;
     std::cout << "Second serial test: " << serialTest(secondBlocksInvert) << std::endl;
@@ -109,7 +110,10 @@ void encryptBMPFile(RC6& rc6, const std::string& filename ) {
     std::vector<int> analyzfrequency;
     analyzfrequency = analyzeBitFrequency(firstBlocksInvert, secondBlocksInvert);
 
-    //end lab3
+    for (auto x : analyzfrequency)
+        std::cout << "Bit frequency: " << x << std::endl;
+
+    //lab3 ending here...
 
     std::vector<uint32_t> ciphertext = rc6.encryptCBC(iv, pixelUint32Data);
     std::string encryptedPixelData = uint32VectorToString(ciphertext);
