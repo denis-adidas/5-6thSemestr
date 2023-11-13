@@ -38,7 +38,15 @@
     </li>
     <% } %>
 </ol>
+<form id="deleteForm">
+    <label for="listNumber">Number of first list:</label>
+    <input type="text" id="listNumber" name="listNumber" required>
 
+    <label for="itemName">Deleted item:</label>
+    <input type="text" id="itemName" name="itemName" required>
+
+    <button type="button" onclick="deleteItem()">Delete</button>
+</form>
 <script>
     function toggleList(item) {
         const nestedList = item.querySelector(".nested");
@@ -50,6 +58,34 @@
             item.classList.remove("open");
             item.classList.add("closed");
             nestedList.style.display = "none";
+        }
+    }
+
+    function deleteItem() {
+        const listNumber = parseInt(document.getElementById("listNumber").value, 10);
+        const itemName = document.getElementById("itemName").value;
+        const topLevelList = document.getElementById("list");
+
+        if (listNumber === 0) {
+            topLevelList.removeChild(topLevelList.firstElementChild);
+            return;
+        }
+
+        const topLevelItem = topLevelList.children[listNumber - 1];
+
+        if (topLevelItem) {
+            const nestedList = topLevelItem.querySelector(".nested");
+            const listItems = nestedList.getElementsByTagName("li");
+
+            const itemIndex = Array.from(listItems).findIndex(item => item.textContent.trim() === itemName.trim());
+
+            if (itemIndex !== -1) {
+                listItems[itemIndex].remove();
+            } else {
+                alert("Элемент не найден в списке.");
+            }
+        } else {
+            alert("Список с указанным номером не существует.");
         }
     }
 </script>

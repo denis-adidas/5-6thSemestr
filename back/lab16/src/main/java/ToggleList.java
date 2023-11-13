@@ -37,7 +37,7 @@ public class ToggleList {
                 .toAbsolutePath()
                 .getParent()
                 .toString();
-        File file = new File(userDir + "/webapps/lab16v2/autosave.json");
+        File file = new File(userDir + "/webapps/lab16/autosave.json");
         try (Reader reader = new BufferedReader(new InputStreamReader(
                 new FileInputStream(file), StandardCharsets.UTF_8))) {
             Gson gson = new Gson();
