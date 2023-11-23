@@ -25,4 +25,6 @@ double countCorell(std::vector<uint32_t>& plain, std::vector<uint32_t>& cipher);
 std::vector<uint32_t> generateRandomKey();
 std::vector<uint32_t> generateRandomIV();
 
+void printCache(std::vector<double>& cache);
+
 #endif

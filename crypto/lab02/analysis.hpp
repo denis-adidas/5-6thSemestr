@@ -6,7 +6,7 @@
 #include <cmath>
 #include <cstdint>
 
-double autocorrelationTest(const std::vector<uint32_t>& sequence);
+double autocorrelationTest(const std::vector<uint32_t>& sequence, std::vector<double>& cache);
 void runLengthTest(const std::vector<uint32_t>& sequence);
 void frequencyTest(const std::vector<uint32_t>& sequence);
 double serialTest(const std::vector<uint32_t>& sequence);

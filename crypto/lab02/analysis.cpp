@@ -11,16 +11,20 @@ int calculateA(const std::vector<uint32_t>& sequence, size_t d) {
     return result;
 }
 
-double autocorrelationTest(const std::vector<uint32_t>& sequence) {
-    size_t n = sequence.size();
+double autocorrelationTest(const std::vector<uint32_t>& sequence, std::vector<double>& cache) {
+    size_t n = sequence.size()/2;
+    cache.clear();
 
     double sum = 0.0;
     for (size_t d = 1; d <= n / 2; ++d) {
         int A_d = calculateA(sequence, d);
         double X5 = 2.0 * (A_d - (n - d)) / std::sqrt(n - d);
 
+        cache.emplace_back(X5);
         sum += X5;
     }
+
+
     return sum / (n/2);
 }
 
@@ -83,7 +87,7 @@ void frequencyTest(const std::vector<uint32_t>& sequence) {
     double expectedFrequency = 0.5;
 
     std::cout << "For 0: " << static_cast<double>(countZeros) / n << ", Expected: " << expectedFrequency << std::endl;
-    std::cout << "For 1: " << static_cast<double>(countOnes) / n << ", Expected: " << expectedFrequency << std::endl;
+    std::cout << "For1 1: " << static_cast<double>(countOnes) / n << ", Expected: " << expectedFrequency << std::endl;
 }
 
 std::vector<int> analyzeBitFrequency(const std::vector<uint32_t>& sequence1, const std::vector<uint32_t>& sequence2) {

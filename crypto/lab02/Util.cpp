@@ -84,20 +84,26 @@ void encryptBMPFile(RC6& rc6, const std::string& filename ) {
     readBinaryFile(filename, imageData);
 
     std::string pixelData = imageData.substr(54);
-    std::vector<uint32_t> pixelUint32Data = stringToUint32Vector(pixelData);
+
+    std::string BitsSample = pixelData.substr(0, 1000);
+
+    std::vector<uint32_t> pixelUint32Data = stringToUint32Vector(BitsSample);
 
     std::vector<uint32_t> iv = generateRandomIV();
-
     //lab3 begins here
     //Invert
     std::vector<uint32_t> firstBlocksInvert = invertFirstBits(pixelUint32Data);
     std::vector<uint32_t> secondBlocksInvert = invertSecondBits(pixelUint32Data);
+    std::vector<double> cache;
 
     std::vector<uint32_t> cipherTextFirst = rc6.encryptCBC(iv, firstBlocksInvert);
     std::vector<uint32_t> cipherTextSecond = rc6.encryptCBC(iv, secondBlocksInvert);
 
-//    std::cout << "First data auto corellation test: " << autocorrelationTest(firstBlocksInvert) << std::endl;
-//    std::cout << "Second data auto corellation test: " << autocorrelationTest(secondBlocksInvert) << std::endl;
+    std::cout << "First data auto corellation test: " << autocorrelationTest(firstBlocksInvert, cache) << std::endl;
+//    printCache(cache);
+
+    std::cout << "Second data auto corellation test: " << autocorrelationTest(secondBlocksInvert, cache) << std::endl;
+//    printCache(cache);
 
     std::cout << "First serial test: " << serialTest(firstBlocksInvert) << std::endl;
     std::cout << "Second serial test: " << serialTest(secondBlocksInvert) << std::endl;
@@ -110,10 +116,7 @@ void encryptBMPFile(RC6& rc6, const std::string& filename ) {
     std::vector<int> analyzfrequency;
     analyzfrequency = analyzeBitFrequency(firstBlocksInvert, secondBlocksInvert);
 
-    for (auto x : analyzfrequency)
-        std::cout << "Bit frequency: " << x << std::endl;
-
-    //lab3 ending here...
+    //end lab3
 
     std::vector<uint32_t> ciphertext = rc6.encryptCBC(iv, pixelUint32Data);
     std::string encryptedPixelData = uint32VectorToString(ciphertext);
@@ -210,4 +213,9 @@ double countCorell(std::vector<uint32_t>& plain, std::vector<uint32_t>& cipher) 
     return (double)corell / N;
 }
 
+void printCache(std::vector<double>& cache) {
+    for (int i = 0; i < cache.size(); ++i) {
+        std::cout << i + 1 << " " << cache[i] << std::endl;
+    }
+}
 
