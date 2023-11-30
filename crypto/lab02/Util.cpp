@@ -1,5 +1,4 @@
 #include "Util.hpp"
-#include "RC6.hpp"
 
 std::vector<uint32_t> invertFirstBits(const std::vector<uint32_t>& block) {
     int wordSize = RC6::getWordSize();
@@ -183,11 +182,5 @@ double countCorell(std::vector<uint32_t>& plain, std::vector<uint32_t>& cipher) 
     }
 
     return (double)corell / N;
-}
-
-void printCache(std::vector<double>& cache) {
-    for (int i = 0; i < cache.size(); ++i) {
-        std::cout << i + 1 << " " << cache[i] << std::endl;
-    }
 }
 

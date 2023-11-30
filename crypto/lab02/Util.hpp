@@ -7,6 +7,7 @@
 #include <iostream>
 #include <fstream>
 #include <random>
+#include <map>
 #include "RC6.hpp"
 
 std::vector<uint32_t> stringToUint32Vector(const std::string& str);
@@ -24,5 +25,7 @@ double countCorell(std::vector<uint32_t>& plain, std::vector<uint32_t>& cipher);
 
 std::vector<uint32_t> generateRandomKey();
 std::vector<uint32_t> generateRandomIV();
+
+void printCache(std::map<int, double>& cache);
 
 #endif

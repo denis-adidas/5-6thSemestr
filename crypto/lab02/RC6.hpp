@@ -2,6 +2,7 @@
 #define LAB02_RC6_HPP
 
 #include <cstdint>
+#include <iostream>
 #include <vector>
 
 class RC6 {

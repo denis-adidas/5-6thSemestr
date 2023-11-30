@@ -1,4 +1,3 @@
-#include <iostream>
 #include "RC6.hpp"
 
 RC6::RC6(const std::vector<uint32_t>& key) {
