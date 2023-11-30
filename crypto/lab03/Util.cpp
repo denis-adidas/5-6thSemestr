@@ -1,5 +1,6 @@
 #include "Util.hpp"
 #include "RC6.hpp"
+#include "analysis.hpp"
 
 std::vector<uint32_t> invertFirstBits(const std::vector<uint32_t>& block) {
     int wordSize = RC6::getWordSize();
@@ -89,6 +90,33 @@ void encryptBMPFile(RC6& rc6, const std::string& filename ) {
     std::vector<uint32_t> pixelUint32Data = stringToUint32Vector(BitsSample);
 
     std::vector<uint32_t> iv = generateRandomIV();
+    //lab3 begins here
+    //Invert
+    std::vector<uint32_t> firstBlocksInvert = invertFirstBits(pixelUint32Data);
+    std::vector<uint32_t> secondBlocksInvert = invertSecondBits(pixelUint32Data);
+    std::map<int, double> cache;
+
+    std::vector<uint32_t> cipherTextFirst = rc6.encryptCBC(iv, firstBlocksInvert);
+    std::vector<uint32_t> cipherTextSecond = rc6.encryptCBC(iv, secondBlocksInvert);
+
+    std::cout << "First data auto corellation test: " << autocorrelationTest(firstBlocksInvert, cache) << std::endl;
+    printCache(cache);
+
+    std::cout << "Second data auto corellation test: " << autocorrelationTest(secondBlocksInvert, cache) << std::endl;
+    printCache(cache);
+
+    std::cout << "First serial test: " << serialTest(firstBlocksInvert) << std::endl;
+    std::cout << "Second serial test: " << serialTest(secondBlocksInvert) << std::endl;
+
+    //first frequency test
+    frequencyTest(firstBlocksInvert);
+    //second frequency test
+    frequencyTest(secondBlocksInvert);
+
+    std::vector<int> analyzfrequency;
+    analyzfrequency = analyzeBitFrequency(firstBlocksInvert, secondBlocksInvert);
+
+    //end lab3
 
     std::vector<uint32_t> ciphertext = rc6.encryptCBC(iv, pixelUint32Data);
     std::string encryptedPixelData = uint32VectorToString(ciphertext);
@@ -185,9 +213,9 @@ double countCorell(std::vector<uint32_t>& plain, std::vector<uint32_t>& cipher) 
     return (double)corell / N;
 }
 
-void printCache(std::vector<double>& cache) {
-    for (int i = 0; i < cache.size(); ++i) {
-        std::cout << i + 1 << " " << cache[i] << std::endl;
+void printCache(std::map<int, double>& cache) {
+    for (const auto& pair : cache) {
+        std::cout << pair.first << " " << pair.second << std::endl;
     }
 }
 
