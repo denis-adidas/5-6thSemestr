@@ -21,7 +21,6 @@ void encryptTXTFile(RC6& rc6, const std::string&  filename);
 
 
 double getDistribution(std::vector<uint32_t>& data);
-double countCorell(std::vector<uint32_t>& plain, std::vector<uint32_t>& cipher);
 
 std::vector<uint32_t> generateRandomKey();
 std::vector<uint32_t> generateRandomIV();
