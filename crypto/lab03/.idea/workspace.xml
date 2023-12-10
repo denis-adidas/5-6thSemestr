@@ -1,0 +1,125 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="AutoImportSettings">
+    <option name="autoReloadType" value="SELECTIVE" />
+  </component>
+  <component name="CMakePresetLoader">{
+  &quot;useNewFormat&quot;: true
+}</component>
+  <component name="CMakeReloadState">
+    <option name="reloaded" value="true" />
+  </component>
+  <component name="CMakeRunConfigurationManager">
+    <generated>
+      <config projectName="lab02" targetName="lab02" />
+    </generated>
+  </component>
+  <component name="CMakeSettings">
+    <configurations>
+      <configuration PROFILE_NAME="Debug" ENABLED="true" CONFIG_NAME="Debug" />
+    </configurations>
+  </component>
+  <component name="ChangeListManager">
+    <list default="true" id="c5ded851-5b43-43f7-b939-62736ed4aec7" name="Changes" comment="" />
+    <option name="SHOW_DIALOG" value="false" />
+    <option name="HIGHLIGHT_CONFLICTS" value="true" />
+    <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
+    <option name="LAST_RESOLUTION" value="IGNORE" />
+  </component>
+  <component name="ClangdSettings">
+    <option name="formatViaClangd" value="false" />
+  </component>
+  <component name="ExecutionTargetManager" SELECTED_TARGET="CMakeBuildProfile:Debug" />
+  <component name="ProjectApplicationVersion">
+    <option name="ide" value="CLion" />
+    <option name="majorVersion" value="2023" />
+    <option name="minorVersion" value="2.2" />
+  </component>
+  <component name="ProjectColorInfo">{
+  &quot;associatedIndex&quot;: 6
+}</component>
+  <component name="ProjectId" id="2X1oBwYOkvEPHi2Vw5h4F4jOed1" />
+  <component name="ProjectViewState">
+    <option name="hideEmptyMiddlePackages" value="true" />
+    <option name="showLibraryContents" value="true" />
+  </component>
+  <component name="PropertiesComponent">{
+  &quot;keyToString&quot;: {
+    &quot;RunOnceActivity.OpenProjectViewOnStart&quot;: &quot;true&quot;,
+    &quot;RunOnceActivity.ShowReadmeOnStart&quot;: &quot;true&quot;,
+    &quot;RunOnceActivity.cidr.known.project.marker&quot;: &quot;true&quot;,
+    &quot;cf.first.check.clang-format&quot;: &quot;false&quot;,
+    &quot;cidr.known.project.marker&quot;: &quot;true&quot;,
+    &quot;last_opened_file_path&quot;: &quot;D:/CLion_projects/crypto/lab02/data&quot;
+  }
+}</component>
+  <component name="RecentsManager">
+    <key name="CopyFile.RECENT_KEYS">
+      <recent name="D:\CLion_projects\crypto\lab02\data" />
+    </key>
+    <key name="MoveFile.RECENT_KEYS">
+      <recent name="D:\CLion_projects\crypto\lab02\data" />
+    </key>
+  </component>
+  <component name="RunManager">
+    <configuration name="lab02" type="CMakeRunConfiguration" factoryName="Application" REDIRECT_INPUT="false" ELEVATE="false" USE_EXTERNAL_CONSOLE="false" EMULATE_TERMINAL="false" PASS_PARENT_ENVS_2="true" PROJECT_NAME="lab02" TARGET_NAME="lab02" CONFIG_NAME="Debug" RUN_TARGET_PROJECT_NAME="lab02" RUN_TARGET_NAME="lab02">
+      <method v="2">
+        <option name="com.jetbrains.cidr.execution.CidrBuildBeforeRunTaskProvider$BuildBeforeRunTask" enabled="true" />
+      </method>
+    </configuration>
+  </component>
+  <component name="SpellCheckerSettings" RuntimeDictionaries="0" Folders="0" CustomDictionaries="0" DefaultDictionary="application-level" UseSingleDictionary="true" transferred="true" />
+  <component name="TaskManager">
+    <task active="true" id="Default" summary="Default task">
+      <changelist id="c5ded851-5b43-43f7-b939-62736ed4aec7" name="Changes" comment="" />
+      <created>1697805814225</created>
+      <option name="number" value="Default" />
+      <option name="presentableId" value="Default" />
+      <updated>1697805814225</updated>
+      <workItem from="1697805815837" duration="598000" />
+      <workItem from="1697901994112" duration="6710000" />
+      <workItem from="1698003499224" duration="3540000" />
+      <workItem from="1698045241475" duration="3459000" />
+      <workItem from="1698075151754" duration="158000" />
+      <workItem from="1698077771778" duration="1000" />
+      <workItem from="1698166116705" duration="6072000" />
+      <workItem from="1698217450037" duration="15532000" />
+      <workItem from="1698316147126" duration="5352000" />
+      <workItem from="1698339482384" duration="6529000" />
+      <workItem from="1698347779040" duration="139000" />
+      <workItem from="1698353419393" duration="790000" />
+      <workItem from="1698389856204" duration="8238000" />
+      <workItem from="1698404946409" duration="1000" />
+      <workItem from="1698424545067" duration="1707000" />
+      <workItem from="1698431727840" duration="390000" />
+      <workItem from="1698486171049" duration="189000" />
+      <workItem from="1699454956443" duration="279000" />
+      <workItem from="1699455971937" duration="390000" />
+      <workItem from="1699469561248" duration="3237000" />
+      <workItem from="1699473079050" duration="119000" />
+      <workItem from="1699516845513" duration="4049000" />
+      <workItem from="1699524320864" duration="1075000" />
+      <workItem from="1699564250523" duration="2726000" />
+      <workItem from="1699597638357" duration="4036000" />
+      <workItem from="1699603547111" duration="2000" />
+      <workItem from="1699604140636" duration="900000" />
+      <workItem from="1700422821622" duration="98000" />
+      <workItem from="1700505312880" duration="79000" />
+      <workItem from="1700590444356" duration="2900000" />
+      <workItem from="1700598914849" duration="597000" />
+      <workItem from="1700677667267" duration="7548000" />
+      <workItem from="1700766407352" duration="2337000" />
+      <workItem from="1700837544927" duration="7000" />
+      <workItem from="1700837587154" duration="4000" />
+      <workItem from="1700840136568" duration="1743000" />
+      <workItem from="1701372650265" duration="2182000" />
+    </task>
+    <servers />
+  </component>
+  <component name="VCPKGProject">
+    <isAutomaticEditVcpkgJson value="false" />
+    <isAutomaticCheckingOnLaunch value="false" />
+    <isAutomaticFoundErrors value="true" />
+    <isAutomaticFoundErrors value="true" />
+  </component>
+</project>
