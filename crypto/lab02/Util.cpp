@@ -83,9 +83,9 @@ void encryptBMPFile(RC6& rc6, const std::string& filename ) {
 
     std::string pixelData = imageData.substr(54);
 
-    std::string BitsSample = pixelData.substr(0, 1000);
+//    std::string BitsSample = pixelData.substr(0, 1000);
 
-    std::vector<uint32_t> pixelUint32Data = stringToUint32Vector(BitsSample);
+    std::vector<uint32_t> pixelUint32Data = stringToUint32Vector(pixelData);
 
     std::vector<uint32_t> iv = generateRandomIV();
 
