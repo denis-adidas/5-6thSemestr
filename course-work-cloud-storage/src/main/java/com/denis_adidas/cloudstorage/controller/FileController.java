@@ -8,6 +8,7 @@ import com.denis_adidas.cloudstorage.services.FileService;
 import com.denis_adidas.cloudstorage.services.NoteService;
 import com.denis_adidas.cloudstorage.services.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.security.core.Authentication;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -57,13 +58,30 @@ public class FileController {
         return "files/index";
     }
 
+    @GetMapping("/fileDetails/{fileId}")
+    public String getFileDetails(@PathVariable int fileId, Model model) {
+        File file = fileService.getFileById(fileId);
+
+        if (file != null && file.isDirectory()) {
+            model.addAttribute("files", fileService.getFileByParentId(fileId));
+            model.addAttribute("parentId", fileId); // добавляем идентификатор текущей директории
+            return "fileDetails";
+        } else {
+            return "home";
+        }
+    }
+
+
+
     @PostMapping
-    public ModelAndView fileUpload(@RequestParam("fileUpload") MultipartFile file, Authentication auth) {
+    public ModelAndView fileUpload(@RequestParam("fileUpload") MultipartFile file, @RequestParam("parentId") Integer parentId, Authentication auth) {
         ModelAndView result = new ModelAndView();
         String status = null;
-
+        if (parentId == null) {
+            parentId = 0;
+        }
         try {
-            if(fileService.addFile(file, auth.getName())) {
+            if(fileService.addFile(file, parentId, auth.getName())) {
                 result.addObject("success", true);
                 status = "File uploaded successfully.";
             }
@@ -76,6 +94,30 @@ public class FileController {
         return result;
     }
 
+
+    @PostMapping("/createDirectory")
+    public ModelAndView createDirectory(@RequestParam("directoryName") String directoryName,
+                                        @RequestParam("parentId") Integer parentId,
+                                        Authentication auth) {
+        ModelAndView result = new ModelAndView();
+        String status = null;
+        if (parentId == null) {
+            parentId = 0;
+        }
+
+        try {
+            if (fileService.addFileAsDirectory(auth.getName(), directoryName, parentId)) {
+                result.addObject("success", true);
+                status = "Directory was created.";
+            }
+        } catch (IOException ex) {
+            result.addObject("errorMsg", true);
+            status = "Unable to create a directory.";
+        }
+        result.setViewName("result");
+        result.addObject("message", status);
+        return result;
+    }
 
     @GetMapping("/delete/{fileId}")
     public ModelAndView deleteFile(@PathVariable int fileId) {
@@ -106,4 +148,5 @@ public class FileController {
         response.getOutputStream().write(file.getFileData());
         response.flushBuffer();
     }
+
 }

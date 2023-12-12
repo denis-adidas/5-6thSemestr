@@ -16,13 +16,21 @@ public class File {
     public File() {
     }
 
-    public File(Integer fileId, String filename, String contentType, String fileSize, byte[] fileData, int userId) {
+    public File(Integer fileId, String filename, String contentType, String fileSize, byte[] fileData, Integer userId, Integer parentId) {
         this.fileId = fileId;
         this.filename = filename;
         this.contentType = contentType;
         this.fileSize = fileSize;
         this.fileData = fileData;
         this.userId = userId;
+        this.parentId = parentId;
+    }
+    public File(Integer fileId, String filename, Integer userId, Integer parentId, Boolean isDirectory) {
+        this.fileId = fileId;
+        this.filename = filename;
+        this.userId = userId;
+        this.parentId = parentId;
+        this.isDirectory = isDirectory;
     }
 
 

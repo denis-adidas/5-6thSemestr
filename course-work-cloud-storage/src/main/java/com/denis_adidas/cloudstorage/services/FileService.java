@@ -2,6 +2,7 @@ package com.denis_adidas.cloudstorage.services;
 
 import com.denis_adidas.cloudstorage.mapper.FileMapper;
 import com.denis_adidas.cloudstorage.model.File;
+import jdk.jfr.Description;
 import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
 
@@ -27,7 +28,12 @@ public class FileService {
         return fileMapper.getFileById(fileId);
     }
 
-    public boolean addFile(MultipartFile multipartFile, String username) throws IOException {
+    public List<File> getFileByParentId(int parentId) {
+        return fileMapper.getFileByParentId(parentId);
+    }
+
+
+    public boolean addFile(MultipartFile multipartFile, Integer parentId, String username) throws IOException {
         int userId = userService.getUser(username).getUserId();
 
         File file = new File(
@@ -36,10 +42,26 @@ public class FileService {
                 multipartFile.getContentType(),
                 Long.toString(multipartFile.getSize()),
                 multipartFile.getBytes(),
-                userId
+                userId,
+                parentId
             );
         return fileMapper.insertFile(file) > 0;
     }
+
+    @Description("добавить fileSize = storageUsage")
+    public boolean addFileAsDirectory(String username, String directoryName, Integer parentId) throws IOException {
+        int userId = userService.getUser(username).getUserId();
+
+        File file = new File(
+                null,
+                directoryName,
+                userId,
+                parentId,
+                true
+        );
+        return fileMapper.insertFile(file) > 0;
+    }
+
 
     public List<File> getAllFiles() {
         return fileMapper.getAllFiles();

@@ -17,11 +17,12 @@ public class StorageUsage {
         this.userService = userService;
     }
 
-//    public String diskUsage() {
-//        int userId = userService.getUser(userName).getUserId();
-//        List<File> files = fileService.getFilesByUser(userId);
-//        for (var x : files) {
-//            usageSpace += x.getFileData();
-//        }
-//    }
+    public String diskUsage() {
+        int userId = userService.getUser(userName).getUserId();
+        List<File> files = fileService.getFilesByUser(userId);
+        for (var x : files) {
+            usageSpace += Long.parseLong(x.getFileSize());
+        }
+        return Long.toString(usageSpace);
+    }
 }

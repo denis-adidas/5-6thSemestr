@@ -11,7 +11,10 @@ import org.springframework.security.core.Authentication;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
+
+import java.util.List;
 
 @Controller
 @RequestMapping("/home")
@@ -36,6 +39,18 @@ public class HomeController {
         model.addAttribute("notes", noteService.getNoteByUser(userId));
         model.addAttribute("credentials", credentialService.getCredentialsByUser(userId));
         return "home";
+    }
+    @GetMapping("/fileDetails/{fileId}")
+    public String getFileDetails(@PathVariable int fileId, Model model) {
+        File file = fileService.getFileById(fileId);
+
+        if (file != null && file.isDirectory()) {
+            model.addAttribute("files", fileService.getFileByParentId(fileId));
+            model.addAttribute("parentId", fileId); // добавляем идентификатор текущей директории
+            return "fileDetails";
+        } else {
+            return "home";
+        }
     }
 }
 
