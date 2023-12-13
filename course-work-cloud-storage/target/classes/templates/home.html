@@ -57,13 +57,22 @@
                                 </tr>
                                 </thead>
                                 <tbody>
+
                                 <tr th:each="file : ${files}">
                                     <td>
-                                        <a th:if="${file.isDirectory()}" th:href="@{'/home/fileDetails/' + ${file.fileId}}" class="btn btn-info">Open</a>
+                                        <a th:if="${file.isDirectory()}" th:href="@{'fileDetails/' + ${file.fileId}}" class="btn btn-info">Open</a>
                                         <a th:unless="${file.isDirectory()}" th:href="@{'/files/download/' + ${file.fileId}}" class="btn btn-success">Download</a>
                                         <a th:href="@{'/files/delete/' + ${file.fileId}}" class="btn btn-danger">Delete</a>
                                     </td>
                                     <td th:text="${file.filename}">ExampleFile.txt</td>
+                                    <td>
+                                        <form th:action="@{/files/moveToDirectory/{fileId}(fileId=${file.fileId})}" method="post">
+                                            <select name="parentId">
+                                                <option th:each="directoryId : ${directories}" th:value="${directoryId}" th:text="${directoryId}"></option>
+                                            </select>
+                                            <button type="submit">Move</button>
+                                        </form>
+                                    </td>
                                 </tr>
                                 </tbody>
                             </table>
@@ -234,6 +243,12 @@
                 document.getElementById("fileUpload").required = true;
             }
 
+        </script>
+        <script th:inline="javascript">
+        function moveFile(select) {
+            var form = select.form;
+            form.submit();
+        }
         </script>
     </body>
 </html>

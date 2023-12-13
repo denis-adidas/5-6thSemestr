@@ -70,7 +70,28 @@ public class FileController {
             return "home";
         }
     }
+    @PostMapping("/moveToDirectory/{fileId}")
+    public ModelAndView moveFileToDirectory(@PathVariable int fileId, @RequestParam("parentId") String newParentId) {
+        ModelAndView result = new ModelAndView();
+        String status = "";
 
+        try {
+            if (fileService.moveFileToDirectory(fileId, newParentId)) {
+                result.addObject("success", true);
+                status = "File moved to directory successfully.";
+            } else {
+                result.addObject("errorMsg", true);
+                status = "Unable to move file to directory.";
+            }
+        } catch (Exception ex) {
+            result.addObject("errorMsg", true);
+            status = "An error occurred while moving the file.";
+        }
+
+        result.setViewName("result");
+        result.addObject("message", status);
+        return result;
+    }
 
 
     @PostMapping

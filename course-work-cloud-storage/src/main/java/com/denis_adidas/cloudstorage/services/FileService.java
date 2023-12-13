@@ -32,6 +32,16 @@ public class FileService {
         return fileMapper.getFileByParentId(parentId);
     }
 
+    public List<String> getDirectories(int userId) {return fileMapper.getDirectories();}
+    public boolean moveFileToDirectory(int fileId, String nameDirectory) {
+        File file = fileMapper.getFileById(fileId);
+        int newParentId = fileMapper.getFileIdByName(nameDirectory);
+        if (file != null) {
+            file.setParentId(newParentId);
+            return fileMapper.updateFile(file) > 0;
+        }
+        return false;
+    }
 
     public boolean addFile(MultipartFile multipartFile, Integer parentId, String username) throws IOException {
         int userId = userService.getUser(username).getUserId();
@@ -70,6 +80,7 @@ public class FileService {
     public boolean deleteFile(int fileId) {
         File file = fileMapper.getFileById(fileId);
         if (file != null) {
+            fileMapper.deleteFilesWithParentIdNotInFileId();
             return fileMapper.deleteFile(fileId) > 0;
         }
         return false;

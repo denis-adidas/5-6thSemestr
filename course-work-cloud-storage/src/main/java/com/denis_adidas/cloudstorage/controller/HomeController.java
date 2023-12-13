@@ -17,7 +17,6 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import java.util.List;
 
 @Controller
-@RequestMapping("/home")
 public class HomeController {
 
     private final CredentialService credentialService;
@@ -25,19 +24,23 @@ public class HomeController {
     private final NoteService noteService;
     private final UserService userService;
 
+
     public HomeController(CredentialService credentialService, FileService fileService, NoteService noteService, UserService userService) {
         this.credentialService = credentialService;
         this.fileService = fileService;
         this.noteService = noteService;
         this.userService = userService;
+
     }
 
-    @GetMapping
+    @RequestMapping("/home")
     public String getHomeView(Authentication authentication, Credential credential, Note note, File file, Model model) {
         int userId = userService.getUser(authentication.getName()).getUserId();
+        List<String> directories = fileService.getDirectories(userId);
         model.addAttribute("files", fileService.getFilesByUser(userId));
         model.addAttribute("notes", noteService.getNoteByUser(userId));
         model.addAttribute("credentials", credentialService.getCredentialsByUser(userId));
+        model.addAttribute("directories", directories);
         return "home";
     }
     @GetMapping("/fileDetails/{fileId}")
