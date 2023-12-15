@@ -32,7 +32,8 @@ public class FileService {
         return fileMapper.getFileByParentId(parentId);
     }
 
-    public List<String> getDirectories(int userId) {return fileMapper.getDirectories();}
+    public List<String> getDirectories(int userId) {
+        return fileMapper.getDirectories();}
     public boolean moveFileToDirectory(int fileId, String nameDirectory) {
         File file = fileMapper.getFileById(fileId);
         int newParentId = fileMapper.getFileIdByName(nameDirectory);
@@ -54,7 +55,7 @@ public class FileService {
                 multipartFile.getBytes(),
                 userId,
                 parentId
-            );
+        );
         return fileMapper.insertFile(file) > 0;
     }
 
@@ -71,7 +72,9 @@ public class FileService {
         );
         return fileMapper.insertFile(file) > 0;
     }
-
+    public int getUserIdByFileId(int fileId) {
+        return fileMapper.getUserIdByFileId(fileId);
+    }
 
     public List<File> getAllFiles() {
         return fileMapper.getAllFiles();

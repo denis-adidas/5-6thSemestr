@@ -54,7 +54,7 @@
 
                 <tr th:each="file : ${files}">
                     <td>
-                        <a th:if="${file.isDirectory()}" th:href="@{'/home/fileDetails/' + ${file.fileId}}" class="btn btn-info">Open</a>
+                        <a th:if="${file.isDirectory()}" th:href="@{'/fileDetails/' + ${file.fileId}}" class="btn btn-info">Open</a>
                         <a th:unless="${file.isDirectory()}" th:href="@{'/files/download/' + ${file.fileId}}" class="btn btn-success">Download</a>
                         <a th:href="@{'/files/delete/' + ${file.fileId}}" class="btn btn-danger">Delete</a>
                     </td>

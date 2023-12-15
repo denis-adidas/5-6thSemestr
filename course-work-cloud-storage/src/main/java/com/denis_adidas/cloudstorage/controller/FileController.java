@@ -17,7 +17,6 @@ import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.servlet.ModelAndView;
 
 import javax.servlet.http.HttpServletResponse;
-import javax.validation.Valid;
 import java.io.IOException;
 import java.util.List;
 
@@ -100,6 +99,12 @@ public class FileController {
         String status = null;
         if (parentId == null) {
             parentId = 0;
+        }
+        if (auth == null) {
+            result.addObject("errorMsg", true);
+            status = "Unable to upload file.";
+            result.addObject("message", status);
+            return result;
         }
         try {
             if(fileService.addFile(file, parentId, auth.getName())) {

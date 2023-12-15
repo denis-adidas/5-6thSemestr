@@ -45,11 +45,14 @@ public class HomeController {
     }
     @GetMapping("/fileDetails/{fileId}")
     public String getFileDetails(@PathVariable int fileId, Model model) {
+        int userId = fileService.getUserIdByFileId(fileId);
+        List<String> directories = fileService.getDirectories(userId);
         File file = fileService.getFileById(fileId);
+        model.addAttribute("directories", directories);
 
         if (file != null && file.isDirectory()) {
             model.addAttribute("files", fileService.getFileByParentId(fileId));
-            model.addAttribute("parentId", fileId); // добавляем идентификатор текущей директории
+            model.addAttribute("parentId", fileId);
             return "fileDetails";
         } else {
             return "home";

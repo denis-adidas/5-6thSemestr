@@ -43,4 +43,7 @@ public interface FileMapper {
     @Select("SELECT filename FROM FILES WHERE isDirectory = true")
     List<String> getDirectories();
 
+    @Select("SELECT userId FROM FILES WHERE fileId = #{fileid}")
+    int getUserIdByFileId(int fileId);
+
 }
