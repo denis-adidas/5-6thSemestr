@@ -51,6 +51,7 @@ public class HomeController {
 
         List<String> directories = fileService.getDirectories(userId);
         directories.remove(fileService.getFileById(fileId).getFilename());
+
         File file = fileService.getFileById(fileId);
 
         model.addAttribute("directories", directories);

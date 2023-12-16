@@ -1,6 +1,5 @@
 package com.denis_adidas.cloudstorage.mapper;
 
-import com.denis_adidas.cloudstorage.model.Directory;
 import org.apache.ibatis.annotations.*;
 
 import java.util.List;
