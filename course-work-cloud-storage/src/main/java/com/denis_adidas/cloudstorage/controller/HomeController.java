@@ -37,6 +37,7 @@ public class HomeController {
     public String getHomeView(Authentication authentication, Credential credential, Note note, File file, Model model) {
         int userId = userService.getUser(authentication.getName()).getUserId();
         List<String> directories = fileService.getDirectories(userId);
+        directories.remove("home");
         model.addAttribute("files", fileService.getFilesByUser(userId));
         model.addAttribute("notes", noteService.getNoteByUser(userId));
         model.addAttribute("credentials", credentialService.getCredentialsByUser(userId));
@@ -46,8 +47,12 @@ public class HomeController {
     @GetMapping("/fileDetails/{fileId}")
     public String getFileDetails(@PathVariable int fileId, Model model) {
         int userId = fileService.getUserIdByFileId(fileId);
+        int parentId = fileService.getFileById(fileId).getParentId();
+
         List<String> directories = fileService.getDirectories(userId);
+        directories.remove(fileService.getFileById(fileId).getFilename());
         File file = fileService.getFileById(fileId);
+
         model.addAttribute("directories", directories);
 
         if (file != null && file.isDirectory()) {

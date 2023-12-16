@@ -27,6 +27,8 @@ public interface FileMapper {
     @Select("SELECT * FROM FILES WHERE parentId = #{parentId}")
     List<File> getFileByParentId(int parentId);
 
+//    @Select("SELECT filename FROM FILES WHERE parentId = #{parentId}")
+//    Integer getFilenameB
     @Select("SELECT * FROM FILES WHERE userId = #{userId} AND parentId = 0")
     List<File> getFilesByUser(int userId);
 
@@ -40,8 +42,8 @@ public interface FileMapper {
     void deleteFilesWithParentIdNotInFileId();
     @Select("SELECT fileId FROM FILES WHERE filename = #{filename}")
     int getFileIdByName(String filename);
-    @Select("SELECT filename FROM FILES WHERE isDirectory = true")
-    List<String> getDirectories();
+    @Select("SELECT filename FROM FILES WHERE isDirectory = true AND userId = #{userId}")
+    List<String> getDirectories(int userId);
 
     @Select("SELECT userId FROM FILES WHERE fileId = #{fileid}")
     int getUserIdByFileId(int fileId);

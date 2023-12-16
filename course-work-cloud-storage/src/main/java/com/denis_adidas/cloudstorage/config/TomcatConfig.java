@@ -7,11 +7,6 @@ import org.springframework.boot.web.embedded.tomcat.TomcatServletWebServerFactor
 import org.springframework.boot.web.server.WebServerFactoryCustomizer;
 import org.springframework.stereotype.Component;
 
-/**
- * With Tomcat server version 7 and above, the maxSwallowSize property specifies the max number of bytes
- * tomcat will swallow or send to the server when it knows the server will ignore the file.
- * Setting the maxSwallowSize to a negative value instructs tomcat swallow all failed uploads regardless
- * of file size. In this way the application can handle file upload exceptions directly.*/
 @Component
 public class TomcatConfig implements
         WebServerFactoryCustomizer<TomcatServletWebServerFactory> {

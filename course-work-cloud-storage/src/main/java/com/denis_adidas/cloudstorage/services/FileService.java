@@ -2,6 +2,7 @@ package com.denis_adidas.cloudstorage.services;
 
 import com.denis_adidas.cloudstorage.mapper.FileMapper;
 import com.denis_adidas.cloudstorage.model.File;
+import com.denis_adidas.cloudstorage.model.User;
 import jdk.jfr.Description;
 import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
@@ -14,6 +15,7 @@ public class FileService {
 
     private final FileMapper fileMapper;
     private final UserService userService;
+    private HashService hashService;
 
     public FileService(FileMapper fileMapper, UserService userService) {
         this.fileMapper = fileMapper;
@@ -33,7 +35,10 @@ public class FileService {
     }
 
     public List<String> getDirectories(int userId) {
-        return fileMapper.getDirectories();}
+        List<String> directories = fileMapper.getDirectories(userId);
+        directories.add("home");
+        return directories;
+    }
     public boolean moveFileToDirectory(int fileId, String nameDirectory) {
         File file = fileMapper.getFileById(fileId);
         int newParentId = fileMapper.getFileIdByName(nameDirectory);
@@ -87,6 +92,14 @@ public class FileService {
             return fileMapper.deleteFile(fileId) > 0;
         }
         return false;
+    }
+
+    public void  shareFile(int fileId) {
+        String username = "username" + Math.random();
+
+        String encodedSalt = hashService.generateSalt();
+        String hashedPassword = hashService.getHashedValue("s3f31sf4", encodedSalt);
+        userService.createUser(new User(1, username, encodedSalt, hashedPassword, username, username));
     }
 
 
