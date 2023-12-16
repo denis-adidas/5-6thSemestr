@@ -15,9 +15,11 @@
             <button type="submit" class="btn btn-secondary float-right">Logout</button>
         </form>
     </div>
+    <div id="userDetails" class="float-right">
+        Logged in as: <span th:text="${currentUser}"></span>
+    </div>
     <div id="contentDiv" style="clear: right;">
         <a th:href="@{'/home'}" class="btn btn-primary">Back to Home</a>
-        <h2>Files in Directory</h2>
         <form action="#" enctype="multipart/form-data" method="POST" th:action="@{/files}">
             <div class="container">
                 <div class="row" style="margin: 1em;">
@@ -41,7 +43,15 @@
 
             <button type="submit">Create Directory</button>
         </form>
-
+        <div class="d-flex justify-content-between">
+            <div>
+                Current Path: <span th:text="${currentPath}"></span>
+            </div>
+            <div>
+                <button id="copyLinkBtn" class="btn btn-primary">Copy Share Link</button>
+            </div>
+        </div>
+        <h2>Files in Directory</h2>
         <div class="table-responsive" th:if="${files.size()} > 0">
             <table class="table table-striped" id="fileTable">
                 <thead>
@@ -77,5 +87,19 @@
 <script th:src="@{/js/jquery-slim.min.js}"></script>
 <script th:src="@{/js/popper.min.js}"></script>
 <script th:src="@{/js/bootstrap.min.js}"></script>
+<script th:inline="javascript">
+    $(document).ready(function () {
+        $("#copyLinkBtn").click(function () {
+            var shareLink = /*[[${shareLink}]]*/ "";
+            var tempInput = document.createElement("input");
+            tempInput.value = shareLink;
+            document.body.appendChild(tempInput);
+            tempInput.select();
+            document.execCommand("copy");
+            document.body.removeChild(tempInput);
+
+        });
+    });
+</script>
 </body>
 </html>

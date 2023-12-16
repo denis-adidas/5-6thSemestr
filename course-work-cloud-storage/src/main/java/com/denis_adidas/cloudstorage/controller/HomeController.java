@@ -23,6 +23,7 @@ public class HomeController {
     private final FileService fileService;
     private final NoteService noteService;
     private final UserService userService;
+    private String username;
 
 
     public HomeController(CredentialService credentialService, FileService fileService, NoteService noteService, UserService userService) {
@@ -30,36 +31,64 @@ public class HomeController {
         this.fileService = fileService;
         this.noteService = noteService;
         this.userService = userService;
-
     }
 
     @RequestMapping("/home")
     public String getHomeView(Authentication authentication, Credential credential, Note note, File file, Model model) {
         int userId = userService.getUser(authentication.getName()).getUserId();
+        username = authentication.getName();
         List<String> directories = fileService.getDirectories(userId);
         directories.remove("home");
+
         model.addAttribute("files", fileService.getFilesByUser(userId));
         model.addAttribute("notes", noteService.getNoteByUser(userId));
         model.addAttribute("credentials", credentialService.getCredentialsByUser(userId));
         model.addAttribute("directories", directories);
+        model.addAttribute("currentUser", authentication.getName());
+        model.addAttribute("usageSpace", fileService.diskUsage(userId));
+
         return "home";
     }
     @GetMapping("/fileDetails/{fileId}")
     public String getFileDetails(@PathVariable int fileId, Model model) {
         int userId = fileService.getUserIdByFileId(fileId);
-        int parentId = fileService.getFileById(fileId).getParentId();
+
+        String currentPath = fileService.getCurrentPath(fileId);
+        String shareLink = fileService.shareLinkFile(fileId);
 
         List<String> directories = fileService.getDirectories(userId);
         directories.remove(fileService.getFileById(fileId).getFilename());
 
         File file = fileService.getFileById(fileId);
 
-        model.addAttribute("directories", directories);
 
         if (file != null && file.isDirectory()) {
             model.addAttribute("files", fileService.getFileByParentId(fileId));
             model.addAttribute("parentId", fileId);
+            model.addAttribute("currentPath", currentPath);
+            model.addAttribute("directories", directories);
+            model.addAttribute("currentUser", username);
+            model.addAttribute("shareLink", shareLink);
             return "fileDetails";
+        } else {
+            return "home";
+        }
+    }
+
+    @GetMapping("/share/fileDetails/{fileId}")
+    public String getSharedFileDetails(@PathVariable int fileId, Model model) {
+        int userId = fileService.getUserIdByFileId(fileId);
+
+        List<String> directories = fileService.getDirectories(userId);
+        directories.remove(fileService.getFileById(fileId).getFilename());
+
+        File file = fileService.getFileById(fileId);
+
+
+        if (file != null && file.isDirectory()) {
+            model.addAttribute("files", fileService.getFileByParentId(fileId));
+            model.addAttribute("directories", directories);
+            return "share";
         } else {
             return "home";
         }

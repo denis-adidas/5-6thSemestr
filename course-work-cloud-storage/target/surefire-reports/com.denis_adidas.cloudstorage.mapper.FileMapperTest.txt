@@ -1,0 +1,28 @@
+-------------------------------------------------------------------------------
+Test set: com.denis_adidas.cloudstorage.mapper.FileMapperTest
+-------------------------------------------------------------------------------
+Tests run: 6, Failures: 0, Errors: 6, Skipped: 0, Time elapsed: 1.42 s <<< FAILURE! - in com.denis_adidas.cloudstorage.mapper.FileMapperTest
+getAllFiles  Time elapsed: 0.774 s  <<< ERROR!
+java.lang.NoSuchMethodError: 'void com.denis_adidas.cloudstorage.model.File.<init>(java.lang.Integer, java.lang.String, java.lang.String, java.lang.String, byte[], int)'
+	at com.denis_adidas.cloudstorage.mapper.FileMapperTest.setUp(FileMapperTest.java:53)
+
+diskUsage  Time elapsed: 0.015 s  <<< ERROR!
+java.lang.NoSuchMethodError: 'void com.denis_adidas.cloudstorage.model.File.<init>(java.lang.Integer, java.lang.String, java.lang.String, java.lang.String, byte[], int)'
+	at com.denis_adidas.cloudstorage.mapper.FileMapperTest.setUp(FileMapperTest.java:53)
+
+getFilesByUser  Time elapsed: 0.006 s  <<< ERROR!
+java.lang.NoSuchMethodError: 'void com.denis_adidas.cloudstorage.model.File.<init>(java.lang.Integer, java.lang.String, java.lang.String, java.lang.String, byte[], int)'
+	at com.denis_adidas.cloudstorage.mapper.FileMapperTest.setUp(FileMapperTest.java:53)
+
+insertFile  Time elapsed: 0.007 s  <<< ERROR!
+java.lang.NoSuchMethodError: 'void com.denis_adidas.cloudstorage.model.File.<init>(java.lang.Integer, java.lang.String, java.lang.String, java.lang.String, byte[], int)'
+	at com.denis_adidas.cloudstorage.mapper.FileMapperTest.setUp(FileMapperTest.java:53)
+
+getFileById  Time elapsed: 0.004 s  <<< ERROR!
+java.lang.NoSuchMethodError: 'void com.denis_adidas.cloudstorage.model.File.<init>(java.lang.Integer, java.lang.String, java.lang.String, java.lang.String, byte[], int)'
+	at com.denis_adidas.cloudstorage.mapper.FileMapperTest.setUp(FileMapperTest.java:53)
+
+deleteFile  Time elapsed: 0.008 s  <<< ERROR!
+java.lang.NoSuchMethodError: 'void com.denis_adidas.cloudstorage.model.File.<init>(java.lang.Integer, java.lang.String, java.lang.String, java.lang.String, byte[], int)'
+	at com.denis_adidas.cloudstorage.mapper.FileMapperTest.setUp(FileMapperTest.java:53)
+

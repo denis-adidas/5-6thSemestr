@@ -1,0 +1,8 @@
+-------------------------------------------------------------------------------
+Test set: com.denis_adidas.cloudstorage.services.FileServiceTest
+-------------------------------------------------------------------------------
+Tests run: 6, Failures: 0, Errors: 1, Skipped: 0, Time elapsed: 0.121 s <<< FAILURE! - in com.denis_adidas.cloudstorage.services.FileServiceTest
+addFile  Time elapsed: 0.09 s  <<< ERROR!
+java.lang.NullPointerException: Cannot invoke "com.denis_adidas.cloudstorage.model.User.getUserId()" because the return value of "com.denis_adidas.cloudstorage.services.UserService.getUser(String)" is null
+	at com.denis_adidas.cloudstorage.services.FileServiceTest.addFile(FileServiceTest.java:50)
+

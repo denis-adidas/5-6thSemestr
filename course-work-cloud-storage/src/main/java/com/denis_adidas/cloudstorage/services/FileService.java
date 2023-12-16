@@ -77,6 +77,19 @@ public class FileService {
         );
         return fileMapper.insertFile(file) > 0;
     }
+    public String getCurrentPath(int fileId) {
+        StringBuilder path = new StringBuilder();
+        path.append("home/");
+
+        File currentFile = getFileById(fileId);
+
+        while (!currentFile.getFilename().equals("home")) {
+            path.insert(5, currentFile.getFilename() + "/");
+            currentFile = getFileById(currentFile.getParentId());
+        }
+
+        return path.toString();
+    }
     public int getUserIdByFileId(int fileId) {
         return fileMapper.getUserIdByFileId(fileId);
     }
@@ -94,13 +107,20 @@ public class FileService {
         return false;
     }
 
-    public void  shareFile(int fileId) {
-        String username = "username" + Math.random();
-
-        String encodedSalt = hashService.generateSalt();
-        String hashedPassword = hashService.getHashedValue("s3f31sf4", encodedSalt);
-        userService.createUser(new User(1, username, encodedSalt, hashedPassword, username, username));
+    public String shareLinkFile(int fileId) {
+        StringBuilder link = new StringBuilder();
+        link.append("localhost:8080/share/fileDetails/").append(fileId);
+        return link.toString();
     }
 
+    public String diskUsage(int userId) {
+        long usageSpace = 0;
+        List<File> files = getFilesByUser(userId);
+        for (var x : files) {
+            if (x.getFileSize() != null)
+                usageSpace += Long.parseLong(x.getFileSize());
+        }
+        return Long.toString(usageSpace);
+    }
 
 }

@@ -1,0 +1,137 @@
+-------------------------------------------------------------------------------
+Test set: com.denis_adidas.cloudstorage.mapper.NoteMapperTest
+-------------------------------------------------------------------------------
+Tests run: 7, Failures: 0, Errors: 7, Skipped: 0, Time elapsed: 0.055 s <<< FAILURE! - in com.denis_adidas.cloudstorage.mapper.NoteMapperTest
+getNoteById  Time elapsed: 0 s  <<< ERROR!
+org.springframework.jdbc.BadSqlGrammarException: 
+
+### Error updating database.  Cause: org.h2.jdbc.JdbcSQLSyntaxErrorException: Table "USERS" not found (this database is empty); SQL statement:
+INSERT INTO USERS (username, salt, password, firstName, lastName) VALUES(?, ?, ?, ?, ?) [42104-214]
+### The error may exist in com/denis_adidas/cloudstorage/mapper/UserMapper.java (best guess)
+### The error may involve com.denis_adidas.cloudstorage.mapper.UserMapper.createUser
+### The error occurred while executing an update
+### SQL: INSERT INTO USERS (username, salt, password, firstName, lastName) VALUES(?, ?, ?, ?, ?)
+### Cause: org.h2.jdbc.JdbcSQLSyntaxErrorException: Table "USERS" not found (this database is empty); SQL statement:
+INSERT INTO USERS (username, salt, password, firstName, lastName) VALUES(?, ?, ?, ?, ?) [42104-214]
+; bad SQL grammar []; nested exception is org.h2.jdbc.JdbcSQLSyntaxErrorException: Table "USERS" not found (this database is empty); SQL statement:
+INSERT INTO USERS (username, salt, password, firstName, lastName) VALUES(?, ?, ?, ?, ?) [42104-214]
+	at com.denis_adidas.cloudstorage.mapper.NoteMapperTest.setUp(NoteMapperTest.java:35)
+Caused by: org.h2.jdbc.JdbcSQLSyntaxErrorException: 
+Table "USERS" not found (this database is empty); SQL statement:
+INSERT INTO USERS (username, salt, password, firstName, lastName) VALUES(?, ?, ?, ?, ?) [42104-214]
+	at com.denis_adidas.cloudstorage.mapper.NoteMapperTest.setUp(NoteMapperTest.java:35)
+
+deleteNoteById  Time elapsed: 0.008 s  <<< ERROR!
+org.springframework.jdbc.BadSqlGrammarException: 
+
+### Error updating database.  Cause: org.h2.jdbc.JdbcSQLSyntaxErrorException: Table "USERS" not found (this database is empty); SQL statement:
+INSERT INTO USERS (username, salt, password, firstName, lastName) VALUES(?, ?, ?, ?, ?) [42104-214]
+### The error may exist in com/denis_adidas/cloudstorage/mapper/UserMapper.java (best guess)
+### The error may involve com.denis_adidas.cloudstorage.mapper.UserMapper.createUser
+### The error occurred while executing an update
+### SQL: INSERT INTO USERS (username, salt, password, firstName, lastName) VALUES(?, ?, ?, ?, ?)
+### Cause: org.h2.jdbc.JdbcSQLSyntaxErrorException: Table "USERS" not found (this database is empty); SQL statement:
+INSERT INTO USERS (username, salt, password, firstName, lastName) VALUES(?, ?, ?, ?, ?) [42104-214]
+; bad SQL grammar []; nested exception is org.h2.jdbc.JdbcSQLSyntaxErrorException: Table "USERS" not found (this database is empty); SQL statement:
+INSERT INTO USERS (username, salt, password, firstName, lastName) VALUES(?, ?, ?, ?, ?) [42104-214]
+	at com.denis_adidas.cloudstorage.mapper.NoteMapperTest.setUp(NoteMapperTest.java:35)
+Caused by: org.h2.jdbc.JdbcSQLSyntaxErrorException: 
+Table "USERS" not found (this database is empty); SQL statement:
+INSERT INTO USERS (username, salt, password, firstName, lastName) VALUES(?, ?, ?, ?, ?) [42104-214]
+	at com.denis_adidas.cloudstorage.mapper.NoteMapperTest.setUp(NoteMapperTest.java:35)
+
+getAllNotes  Time elapsed: 0.008 s  <<< ERROR!
+org.springframework.jdbc.BadSqlGrammarException: 
+
+### Error updating database.  Cause: org.h2.jdbc.JdbcSQLSyntaxErrorException: Table "USERS" not found (this database is empty); SQL statement:
+INSERT INTO USERS (username, salt, password, firstName, lastName) VALUES(?, ?, ?, ?, ?) [42104-214]
+### The error may exist in com/denis_adidas/cloudstorage/mapper/UserMapper.java (best guess)
+### The error may involve com.denis_adidas.cloudstorage.mapper.UserMapper.createUser
+### The error occurred while executing an update
+### SQL: INSERT INTO USERS (username, salt, password, firstName, lastName) VALUES(?, ?, ?, ?, ?)
+### Cause: org.h2.jdbc.JdbcSQLSyntaxErrorException: Table "USERS" not found (this database is empty); SQL statement:
+INSERT INTO USERS (username, salt, password, firstName, lastName) VALUES(?, ?, ?, ?, ?) [42104-214]
+; bad SQL grammar []; nested exception is org.h2.jdbc.JdbcSQLSyntaxErrorException: Table "USERS" not found (this database is empty); SQL statement:
+INSERT INTO USERS (username, salt, password, firstName, lastName) VALUES(?, ?, ?, ?, ?) [42104-214]
+	at com.denis_adidas.cloudstorage.mapper.NoteMapperTest.setUp(NoteMapperTest.java:35)
+Caused by: org.h2.jdbc.JdbcSQLSyntaxErrorException: 
+Table "USERS" not found (this database is empty); SQL statement:
+INSERT INTO USERS (username, salt, password, firstName, lastName) VALUES(?, ?, ?, ?, ?) [42104-214]
+	at com.denis_adidas.cloudstorage.mapper.NoteMapperTest.setUp(NoteMapperTest.java:35)
+
+updateNote  Time elapsed: 0.008 s  <<< ERROR!
+org.springframework.jdbc.BadSqlGrammarException: 
+
+### Error updating database.  Cause: org.h2.jdbc.JdbcSQLSyntaxErrorException: Table "USERS" not found (this database is empty); SQL statement:
+INSERT INTO USERS (username, salt, password, firstName, lastName) VALUES(?, ?, ?, ?, ?) [42104-214]
+### The error may exist in com/denis_adidas/cloudstorage/mapper/UserMapper.java (best guess)
+### The error may involve com.denis_adidas.cloudstorage.mapper.UserMapper.createUser
+### The error occurred while executing an update
+### SQL: INSERT INTO USERS (username, salt, password, firstName, lastName) VALUES(?, ?, ?, ?, ?)
+### Cause: org.h2.jdbc.JdbcSQLSyntaxErrorException: Table "USERS" not found (this database is empty); SQL statement:
+INSERT INTO USERS (username, salt, password, firstName, lastName) VALUES(?, ?, ?, ?, ?) [42104-214]
+; bad SQL grammar []; nested exception is org.h2.jdbc.JdbcSQLSyntaxErrorException: Table "USERS" not found (this database is empty); SQL statement:
+INSERT INTO USERS (username, salt, password, firstName, lastName) VALUES(?, ?, ?, ?, ?) [42104-214]
+	at com.denis_adidas.cloudstorage.mapper.NoteMapperTest.setUp(NoteMapperTest.java:35)
+Caused by: org.h2.jdbc.JdbcSQLSyntaxErrorException: 
+Table "USERS" not found (this database is empty); SQL statement:
+INSERT INTO USERS (username, salt, password, firstName, lastName) VALUES(?, ?, ?, ?, ?) [42104-214]
+	at com.denis_adidas.cloudstorage.mapper.NoteMapperTest.setUp(NoteMapperTest.java:35)
+
+getNotesByUser  Time elapsed: 0.01 s  <<< ERROR!
+org.springframework.jdbc.BadSqlGrammarException: 
+
+### Error updating database.  Cause: org.h2.jdbc.JdbcSQLSyntaxErrorException: Table "USERS" not found (this database is empty); SQL statement:
+INSERT INTO USERS (username, salt, password, firstName, lastName) VALUES(?, ?, ?, ?, ?) [42104-214]
+### The error may exist in com/denis_adidas/cloudstorage/mapper/UserMapper.java (best guess)
+### The error may involve com.denis_adidas.cloudstorage.mapper.UserMapper.createUser
+### The error occurred while executing an update
+### SQL: INSERT INTO USERS (username, salt, password, firstName, lastName) VALUES(?, ?, ?, ?, ?)
+### Cause: org.h2.jdbc.JdbcSQLSyntaxErrorException: Table "USERS" not found (this database is empty); SQL statement:
+INSERT INTO USERS (username, salt, password, firstName, lastName) VALUES(?, ?, ?, ?, ?) [42104-214]
+; bad SQL grammar []; nested exception is org.h2.jdbc.JdbcSQLSyntaxErrorException: Table "USERS" not found (this database is empty); SQL statement:
+INSERT INTO USERS (username, salt, password, firstName, lastName) VALUES(?, ?, ?, ?, ?) [42104-214]
+	at com.denis_adidas.cloudstorage.mapper.NoteMapperTest.setUp(NoteMapperTest.java:35)
+Caused by: org.h2.jdbc.JdbcSQLSyntaxErrorException: 
+Table "USERS" not found (this database is empty); SQL statement:
+INSERT INTO USERS (username, salt, password, firstName, lastName) VALUES(?, ?, ?, ?, ?) [42104-214]
+	at com.denis_adidas.cloudstorage.mapper.NoteMapperTest.setUp(NoteMapperTest.java:35)
+
+createNote  Time elapsed: 0.005 s  <<< ERROR!
+org.springframework.jdbc.BadSqlGrammarException: 
+
+### Error updating database.  Cause: org.h2.jdbc.JdbcSQLSyntaxErrorException: Table "USERS" not found (this database is empty); SQL statement:
+INSERT INTO USERS (username, salt, password, firstName, lastName) VALUES(?, ?, ?, ?, ?) [42104-214]
+### The error may exist in com/denis_adidas/cloudstorage/mapper/UserMapper.java (best guess)
+### The error may involve com.denis_adidas.cloudstorage.mapper.UserMapper.createUser
+### The error occurred while executing an update
+### SQL: INSERT INTO USERS (username, salt, password, firstName, lastName) VALUES(?, ?, ?, ?, ?)
+### Cause: org.h2.jdbc.JdbcSQLSyntaxErrorException: Table "USERS" not found (this database is empty); SQL statement:
+INSERT INTO USERS (username, salt, password, firstName, lastName) VALUES(?, ?, ?, ?, ?) [42104-214]
+; bad SQL grammar []; nested exception is org.h2.jdbc.JdbcSQLSyntaxErrorException: Table "USERS" not found (this database is empty); SQL statement:
+INSERT INTO USERS (username, salt, password, firstName, lastName) VALUES(?, ?, ?, ?, ?) [42104-214]
+	at com.denis_adidas.cloudstorage.mapper.NoteMapperTest.setUp(NoteMapperTest.java:35)
+Caused by: org.h2.jdbc.JdbcSQLSyntaxErrorException: 
+Table "USERS" not found (this database is empty); SQL statement:
+INSERT INTO USERS (username, salt, password, firstName, lastName) VALUES(?, ?, ?, ?, ?) [42104-214]
+	at com.denis_adidas.cloudstorage.mapper.NoteMapperTest.setUp(NoteMapperTest.java:35)
+
+getNoteByTitle  Time elapsed: 0.007 s  <<< ERROR!
+org.springframework.jdbc.BadSqlGrammarException: 
+
+### Error updating database.  Cause: org.h2.jdbc.JdbcSQLSyntaxErrorException: Table "USERS" not found (this database is empty); SQL statement:
+INSERT INTO USERS (username, salt, password, firstName, lastName) VALUES(?, ?, ?, ?, ?) [42104-214]
+### The error may exist in com/denis_adidas/cloudstorage/mapper/UserMapper.java (best guess)
+### The error may involve com.denis_adidas.cloudstorage.mapper.UserMapper.createUser
+### The error occurred while executing an update
+### SQL: INSERT INTO USERS (username, salt, password, firstName, lastName) VALUES(?, ?, ?, ?, ?)
+### Cause: org.h2.jdbc.JdbcSQLSyntaxErrorException: Table "USERS" not found (this database is empty); SQL statement:
+INSERT INTO USERS (username, salt, password, firstName, lastName) VALUES(?, ?, ?, ?, ?) [42104-214]
+; bad SQL grammar []; nested exception is org.h2.jdbc.JdbcSQLSyntaxErrorException: Table "USERS" not found (this database is empty); SQL statement:
+INSERT INTO USERS (username, salt, password, firstName, lastName) VALUES(?, ?, ?, ?, ?) [42104-214]
+	at com.denis_adidas.cloudstorage.mapper.NoteMapperTest.setUp(NoteMapperTest.java:35)
+Caused by: org.h2.jdbc.JdbcSQLSyntaxErrorException: 
+Table "USERS" not found (this database is empty); SQL statement:
+INSERT INTO USERS (username, salt, password, firstName, lastName) VALUES(?, ?, ?, ?, ?) [42104-214]
+	at com.denis_adidas.cloudstorage.mapper.NoteMapperTest.setUp(NoteMapperTest.java:35)
+

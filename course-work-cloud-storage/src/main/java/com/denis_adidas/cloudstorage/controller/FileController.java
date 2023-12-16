@@ -125,12 +125,18 @@ public class FileController {
     public ModelAndView createDirectory(@RequestParam("directoryName") String directoryName,
                                         @RequestParam("parentId") Integer parentId,
                                         Authentication auth) {
+
         ModelAndView result = new ModelAndView();
         String status = null;
         if (parentId == null) {
             parentId = 0;
         }
-
+        if (auth == null) {
+            result.addObject("errorMsg", true);
+            status = "Unable to upload file.";
+            result.addObject("message", status);
+            return result;
+        }
         try {
             if (fileService.addFileAsDirectory(auth.getName(), directoryName, parentId)) {
                 result.addObject("success", true);

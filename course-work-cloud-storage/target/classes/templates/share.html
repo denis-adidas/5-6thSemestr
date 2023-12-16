@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html lang="en" xmlns="http://www.w3.org/1999/xhtml" xmlns:th="https://www.thymeleaf.org">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+
+  <link rel="stylesheet" type="text/css" media="all" th:href="@{/css/bootstrap.min.css}">
+
+  <title>Shared File Details</title>
+</head>
+<body class="p-3 mb-2 bg-light text-black">
+<div class="container">
+  <div id="contentDiv" style="clear: right;">
+    <a th:href="@{'/home'}" class="btn btn-primary">Back to Home</a>
+    <h2>Files in Directory</h2>
+
+    <div class="table-responsive" th:if="${files.size()} > 0">
+      <table class="table table-striped" id="fileTable">
+        <thead>
+        <tr>
+          <th style="width: 20%" scope="col"></th>
+          <th style="width: 80%" scope="col">File Name</th>
+        </tr>
+        </thead>
+        <tbody>
+
+        <tr th:each="file : ${files}">
+          <td>
+            <a th:if="${file.isDirectory()}" th:href="@{'/share/fileDetails/' + ${file.fileId}}" class="btn btn-info">Open</a>
+            <a th:unless="${file.isDirectory()}" th:href="@{'/files/download/' + ${file.fileId}}" class="btn btn-success">Download</a>
+          </td>
+          <td th:text="${file.filename}">ExampleFile.txt</td>
+        </tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
+</div>
+
+<script th:src="@{/js/jquery-slim.min.js}"></script>
+<script th:src="@{/js/popper.min.js}"></script>
+<script th:src="@{/js/bootstrap.min.js}"></script>
+</body>
+</html>
