@@ -22,12 +22,16 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
         auth.authenticationProvider(this.authenticationService);
     }
 
+    @Override
     protected void configure(HttpSecurity http) throws Exception {
         http.authorizeRequests()
                 .antMatchers("/signup", "/css/**", "/js/**").permitAll()
+                .antMatchers("/files/**", "/fileDetails/**").permitAll()
+                .antMatchers("/creteDirectory/**").permitAll()
+                .antMatchers("/share/**").permitAll()
                 .anyRequest().authenticated();
 
-        http.formLogin( )
+        http.formLogin()
                 .loginPage("/login")
                 .permitAll()
                 .and()

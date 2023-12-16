@@ -1,0 +1,105 @@
+<!DOCTYPE html>
+<html lang="en" xmlns="http://www.w3.org/1999/xhtml" xmlns:th="https://www.thymeleaf.org">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+
+    <link rel="stylesheet" type="text/css" media="all" th:href="@{/css/bootstrap.min.css}">
+
+    <title>File Details</title>
+</head>
+<body class="p-3 mb-2 bg-light text-black">
+<div class="container">
+    <div id="logoutDiv">
+        <form action="#" method="POST" th:action="@{/logout}">
+            <button type="submit" class="btn btn-secondary float-right">Logout</button>
+        </form>
+    </div>
+    <div id="userDetails" class="float-right">
+        Logged in as: <span th:text="${currentUser}"></span>
+    </div>
+    <div id="contentDiv" style="clear: right;">
+        <a th:href="@{'/home'}" class="btn btn-primary">Back to Home</a>
+        <form action="#" enctype="multipart/form-data" method="POST" th:action="@{/files}">
+            <div class="container">
+                <div class="row" style="margin: 1em;">
+                    <div class="col-sm-2">
+                        <label for="fileUpload">Upload a New File:</label>
+                    </div>
+                    <div class="col-sm-6">
+                        <input type="file" class="form-control-file" id="fileUpload" name="fileUpload" required>
+                        <input type="hidden" name="parentId" th:value="${parentId}">
+                    </div>
+                    <div class="col-sm-4">
+                        <button type="submit" class="btn btn-dark" onclick="validateFileItem()">Upload</button>
+                    </div>
+                </div>
+            </div>
+        </form>
+        <form method="post" th:action="@{/files/createDirectory}" enctype="multipart/form-data">
+            <label for="directoryName">Directory Name:</label>
+            <input type="text" id="directoryName" name="directoryName" required>
+            <input type="hidden" name="parentId" th:value="${parentId}">
+
+            <button type="submit">Create Directory</button>
+        </form>
+        <div class="d-flex justify-content-between">
+            <div>
+                Current Path: <span th:text="${currentPath}"></span>
+            </div>
+            <div>
+                <button id="copyLinkBtn" class="btn btn-primary">Copy Share Link</button>
+            </div>
+        </div>
+        <h2>Files in Directory</h2>
+        <div class="table-responsive" th:if="${files.size()} > 0">
+            <table class="table table-striped" id="fileTable">
+                <thead>
+                <tr>
+                    <th style="width: 20%" scope="col"></th>
+                    <th style="width: 80%" scope="col">File Name</th>
+                </tr>
+                </thead>
+                <tbody>
+
+                <tr th:each="file : ${files}">
+                    <td>
+                        <a th:if="${file.isDirectory()}" th:href="@{'/fileDetails/' + ${file.fileId}}" class="btn btn-info">Open</a>
+                        <a th:unless="${file.isDirectory()}" th:href="@{'/files/download/' + ${file.fileId}}" class="btn btn-success">Download</a>
+                        <a th:href="@{'/files/delete/' + ${file.fileId}}" class="btn btn-danger">Delete</a>
+                    </td>
+                    <td th:text="${file.filename}">ExampleFile.txt</td>
+                    <td>
+                        <form th:action="@{/files/moveToDirectory/{fileId}(fileId=${file.fileId})}" method="post">
+                            <select name="parentId">
+                                <option th:each="directoryId : ${directories}" th:value="${directoryId}" th:text="${directoryId}"></option>
+                            </select>
+                            <button type="submit">Move</button>
+                        </form>
+                    </td>
+                </tr>
+                </tbody>
+            </table>
+        </div>
+    </div>
+</div>
+
+<script th:src="@{/js/jquery-slim.min.js}"></script>
+<script th:src="@{/js/popper.min.js}"></script>
+<script th:src="@{/js/bootstrap.min.js}"></script>
+<script th:inline="javascript">
+    $(document).ready(function () {
+        $("#copyLinkBtn").click(function () {
+            var shareLink = /*[[${shareLink}]]*/ "";
+            var tempInput = document.createElement("input");
+            tempInput.value = shareLink;
+            document.body.appendChild(tempInput);
+            tempInput.select();
+            document.execCommand("copy");
+            document.body.removeChild(tempInput);
+
+        });
+    });
+</script>
+</body>
+</html>

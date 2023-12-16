@@ -15,7 +15,7 @@ public class FileUploadException {
     public ModelAndView handleFileSizeLimitExceededException(MaxUploadSizeExceededException ex, HttpServletRequest request, HttpServletResponse response) {
         ModelAndView result = new ModelAndView();
         result.setViewName("result");
-        String status = "File is too large, file size limit is 5MB";
+        String status = "File is too large, file size limit is 1Gb";
         result.addObject("errorMsg", true);
         result.addObject("message", status);
         return result;

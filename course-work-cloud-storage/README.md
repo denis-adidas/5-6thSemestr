@@ -11,10 +11,8 @@ and website credentials on a server.
  
 1. The back-end with Spring Boot
 2. The front-end with Thymeleaf
-3. Application tests with Selenium
 
-##Live Server
-[Visit Website](https://java-cloud-storage.herokuapp.com/login)
+
 
 
 
