@@ -1,0 +1,1 @@
+/Library/Developer/CommandLineTools/usr/bin/c++ -g -isysroot /Library/Developer/CommandLineTools/SDKs/MacOSX13.1.sdk -mmacosx-version-min=12.6 -Wl,-search_paths_first -Wl,-headerpad_max_install_names CMakeFiles/ISIS.dir/main.cpp.o CMakeFiles/ISIS.dir/term.cpp.o CMakeFiles/ISIS.dir/util.cpp.o -o ISIS 

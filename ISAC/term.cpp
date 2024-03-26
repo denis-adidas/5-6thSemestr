@@ -5,6 +5,8 @@
 #include "term.hpp"
 #include "util.hpp"
 
+
+
 double Polynomial::upperEstimate(int dist, int length, double probability) {
     double right = 0;
     for (int i = 0; i < dist; i++) {
@@ -23,6 +25,7 @@ double Polynomial::errorDecoder(const std::vector<int>& g, int k, int n, int d, 
         for (int j : tmpVec) {
             sum += j;
         }
+
         code_words[sum]++;
         sum = 0;
     }
@@ -40,23 +43,18 @@ Polynomial Polynomial::remainderGF2(const Polynomial& divider) const {
     Polynomial dividend = *this;
     Polynomial result;
 
-    // Пока степень делимого больше или равна степени делителя
     while (dividend.degree() >= divider.degree() && dividend.degree() != -1) {
         int degreeDiff = dividend.degree() - divider.degree();
         std::vector<int> tempCoefficients(degreeDiff + 1, 0);
 
-        // Вычисляем коэффициент для текущей степени
         tempCoefficients[degreeDiff] = 1;
 
-        // Умножаем делитель на текущий коэффициент
         Polynomial term(tempCoefficients);
         Polynomial product = divider * term;
 
-        // Вычитаем полученное произведение из делимого
         dividend = dividend + product;
     }
 
-    // Остаток от деления - это делимое после выполнения всех операций
     return dividend;
 }
 

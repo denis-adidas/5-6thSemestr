@@ -1,6 +1,13 @@
-cmake_minimum_required(VERSION 3.27)
-project(Binary_Symmetric_Channel)
+cmake_minimum_required(VERSION 3.26.4)
+project(ISIS)
 
 set(CMAKE_CXX_STANDARD 17)
 
-add_executable(Binary_Symmetric_Channel main.cpp system.h theory.h Utils.h)
+add_executable(ISIS
+        main.cpp
+        term.cpp
+        term.hpp
+        util.cpp
+        util.hpp
+        #        test.cpp
+)
