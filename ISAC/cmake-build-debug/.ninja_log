@@ -1,0 +1,7 @@
+# ninja log v5
+19	504	7330811531993543	CMakeFiles/ISIS.dir/util.cpp.obj	fa80e1003d30e723
+91	1128	7331418826200037	CMakeFiles/ISIS.dir/term.cpp.obj	b60bb99668c9fe5f
+16	743	7331426621065988	CMakeFiles/ISIS.dir/main.cpp.obj	c91bba56dc4ffc72
+1	412	7331427584523280	build.ninja	8bc807bf5cc725ab
+744	854	7331426622143346	ISIS.exe	92db4697ca58185c
+17	726	7330821126327640	CMakeFiles/ISIS.dir/test.cpp.obj	f23beb35fa29fd2a
