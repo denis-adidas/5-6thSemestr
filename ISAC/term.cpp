@@ -31,12 +31,12 @@ double Polynomial::errorDecoder(const std::vector<int>& g, int k, int n, int d, 
     }
 
     double result = 0;
-    for (int i = d; i < n; i++) {
+    for (int i = d; i <= n; i++) {
         result += code_words[i] * std::pow(p, i) * std::pow((1 - p), n - i);
     }
 
 
-    return result;
+    return std::abs(result);
 }
 
 Polynomial Polynomial::remainderGF2(const Polynomial& divider) const {

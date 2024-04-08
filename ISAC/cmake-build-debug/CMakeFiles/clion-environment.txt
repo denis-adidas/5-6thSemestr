@@ -1,4 +1,4 @@
-ToolSet: 1.0 (local)Ninja: 1.11.1@/Users/denis_adidas/Applications/CLion Nova.app/Contents/bin/ninja/mac/x64/ninja
+ToolSet: 11.0 w64 (local)@C:\Users\den_p\AppData\Local\Programs\CLion\bin\mingw
 Options: 
 
-Options:
+Options:-DCMAKE_MAKE_PROGRAM=C:/Users/den_p/AppData/Local/Programs/CLion/bin/ninja/win/x64/ninja.exe

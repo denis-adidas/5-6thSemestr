@@ -50,12 +50,12 @@ int countD(const std::vector<int>& g, int k) {
         codeWords.emplace_back(tmpVec);
     }
     int res = calculateHammingDistances(codeWords);
-    for (auto it : codeWords) {
-        for (auto itt : it) {
-            std::cout << itt << ' ';
-        }
-        std::cout << std::endl;
-    }
+//    for (auto it : codeWords) {
+//        for (auto itt : it) {
+//            std::cout << itt << ' ';
+//        }
+//        std::cout << std::endl;
+//    }
 
     return res+1;
 
@@ -88,16 +88,19 @@ int main() {
     //
     //
     for (double p = 0.01; p <= 1.01; p+= 0.01) {
-    //
-    l = k-1;
-    count(base, l, r, d, p);
+        //
+        l = k - 1;
+        d = countD(base, k-1);
+        count(base, l, r, d, p);
         std::cout << "Probability: " << p << std::endl;
-    //
-        l = k+1;
+
+        l = k + 1;
+        d = countD(base, k + 1);
         count(base, l, r, d, p);
         std::cout << "Probability: " << p << std::endl;
 
         l = k;
+        d = countD(base, k);
         count(base, l, r, d, p);
         std::cout << "Probability: " << p << std::endl;
 
