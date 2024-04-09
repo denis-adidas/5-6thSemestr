@@ -84,7 +84,7 @@ public:
 
 public:
     static double upperEstimate(int dist, int length, double probability);
-    static double errorDecoder(const std::vector<int>& g, int k, int n, int d, double p);
+    static double errorDecoder(const std::vector<int>& g, int k, int n, int d, double& p);
     [[nodiscard]] Polynomial remainderGF2(const Polynomial& devider) const;
     [[nodiscard]] std::vector<int> encoder(const std::vector<int>& g) const;
 

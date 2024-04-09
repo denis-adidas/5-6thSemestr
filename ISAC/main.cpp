@@ -5,8 +5,6 @@
 #include "util.hpp"
 
 
-
-
 void count(const std::vector<int>& base, int& l, int& r, int& d, double& p) {
     int n = l + r;
     if (d > n) {
@@ -14,8 +12,8 @@ void count(const std::vector<int>& base, int& l, int& r, int& d, double& p) {
             n++;
         }
     }
-    std::cout << Polynomial::upperEstimate(d, n, p) << ' ';
-    std::cout << Polynomial::errorDecoder(base, l, n, d, p)  << std::endl;
+    std::cout << '(' <<Polynomial::upperEstimate(d, n, p) << ',';
+    std::cout << Polynomial::errorDecoder(base, l, n, d, p) << ")," << std::endl;
 }
 
 int hammingDistance(const std::vector<int>& v1, const std::vector<int>& v2) {
@@ -71,7 +69,7 @@ int main() {
     int r = 0;
     int l = 0;
 
-    int k = 4;
+    int k = 3;
     int n = 0;
 
     int d = 0;
@@ -84,25 +82,25 @@ int main() {
     auto base = a.getData();
     r = a.degree();
     //
-    d = countD(base, k);
     //
     //
-    for (double p = 0.01; p <= 1.01; p+= 0.01) {
+    for (double p = 0.01; p < 1.01; p += 0.01) {
         //
-        l = k - 1;
-        d = countD(base, k-1);
-        count(base, l, r, d, p);
-        std::cout << "Probability: " << p << std::endl;
+//        l = k - 1;
+//        d = countD(base, k-1);
+//        count(base, l, r, d, p);
+//        std::cout << "Probability: " << p << std::endl;
 
-        l = k + 1;
-        d = countD(base, k + 1);
-        count(base, l, r, d, p);
-        std::cout << "Probability: " << p << std::endl;
+//        l = k + 1;
+//        d = countD(base, k + 1);
+//        count(base, l, r, d, p);
+//        std::cout << "Probability: " << p << std::endl;
 
         l = k;
         d = countD(base, k);
         count(base, l, r, d, p);
-        std::cout << "Probability: " << p << std::endl;
+//        std::cout << "Probability: " << p << std::endl;
+
 
         std::cout << std::endl;
     }
